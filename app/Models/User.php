@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'nim',
     ];
 
     /**
@@ -44,5 +46,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function createdSurveys(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Survey::class, 'created_by');
+    }
+
+    public function responses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Response::class, 'user_id');
     }
 }
