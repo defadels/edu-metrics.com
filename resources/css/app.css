@@ -1,11 +1,208 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+@layer base {
+    * {
+        @apply transition-colors duration-200;
+    }
+    
+    body {
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    }
+}
+
+@layer components {
+    /* Glassmorphism Effect */
+    .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .glass-dark {
+        background: rgba(17, 24, 39, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Modern Gradient Backgrounds */
+    .gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+    }
+    
+    .gradient-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+
+    /* Modern Button with Ripple Effect */
+    .btn-modern {
+        @apply relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white;
+        @apply transform transition-all duration-300 ease-out;
+        @apply shadow-lg hover:shadow-2xl hover:scale-105;
+        @apply focus:outline-none focus:ring-4 focus:ring-offset-2;
+    }
+    
+    .btn-modern::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-modern:active::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    /* Floating Label Input */
+    .input-floating {
+        @apply relative;
+    }
+    
+    .input-floating input {
+        @apply w-full px-4 pt-6 pb-2 border-2 border-gray-300 rounded-xl;
+        @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
+        @apply focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800;
+        @apply transition-all duration-300;
+    }
+    
+    .input-floating label {
+        @apply absolute left-4 top-1/2 -translate-y-1/2 text-gray-500;
+        @apply pointer-events-none transition-all duration-300;
+    }
+    
+    .input-floating input:focus + label,
+    .input-floating input:not(:placeholder-shown) + label {
+        @apply top-2 text-xs text-indigo-600 dark:text-indigo-400;
+        transform: translateY(0);
+    }
+
+    /* Card with Lift Effect */
+    .card-modern {
+        @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg;
+        @apply transform transition-all duration-300 ease-out;
+        @apply hover:shadow-2xl hover:-translate-y-2;
+    }
+
+    /* Metric Card with Gradient */
+    .metric-card {
+        @apply relative overflow-hidden rounded-2xl p-6;
+        @apply transform transition-all duration-300 ease-out;
+        @apply hover:scale-105 hover:shadow-2xl;
+    }
+    
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    }
+
+    /* Fade In Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .animate-delay-100 {
+        animation-delay: 0.1s;
+        opacity: 0;
+    }
+    
+    .animate-delay-200 {
+        animation-delay: 0.2s;
+        opacity: 0;
+    }
+    
+    .animate-delay-300 {
+        animation-delay: 0.3s;
+        opacity: 0;
+    }
+
+    /* Gradient Shift Animation */
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Pulse Animation */
+    @keyframes pulse-slow {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.7;
+        }
+    }
+    
+    .animate-pulse-slow {
+        animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Icon Container */
+    .icon-container {
+        @apply w-12 h-12 rounded-xl flex items-center justify-center;
+        @apply bg-gradient-to-br from-indigo-500 to-purple-600;
+        @apply shadow-lg;
+    }
+
+    /* Ripple Effect */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(0);
+        animation: ripple-animation 0.6s ease-out;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+}
+
+@layer utilities {
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 }
