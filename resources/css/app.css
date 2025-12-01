@@ -8,6 +8,13 @@
     * {
         @apply transition-colors duration-200;
     }
+
+    html,body{
+        height: auto;
+        overflow-y: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
     
     body {
         font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -15,6 +22,13 @@
 }
 
 @layer components {
+
+    .guest-layout {
+        min-height: 100vh;
+        height: auto;
+        overflow-y: auto;
+    }
+
     /* Glassmorphism Effect */
     .glass {
         background: rgba(255, 255, 255, 0.1);
@@ -28,6 +42,11 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glass, .glass-dark{
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
     /* Modern Gradient Backgrounds */

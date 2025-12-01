@@ -9,16 +9,6 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyPublicController;
 use Illuminate\Support\Facades\Route;
 
-
-// In routes/web.php or a dedicated cache management route file
-Route::get('/clear-cache', function() {
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear'); // Clear config cache as well
-    Artisan::call('route:clear'); // Clear route cache
-    Artisan::call('view:clear'); // Clear view cache
-    return "Cache cleared!";
-});
-
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/welcome', function () {

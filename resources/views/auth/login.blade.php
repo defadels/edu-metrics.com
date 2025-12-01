@@ -3,7 +3,7 @@
     <div class="absolute inset-0 gradient-primary opacity-10"></div>
     <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
     
-    <div class="relative w-full sm:max-w-md mt-6 px-6 py-8 glass dark:glass-dark shadow-2xl overflow-hidden sm:rounded-2xl animate-fade-in-up">
+    <div class="relative w-full sm:max-w-md mt-6 px-6 py-8 glass dark:glass-dark shadow-2xl overflow-y-auto sm:rounded-2xl animate-fade-in-up">
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
