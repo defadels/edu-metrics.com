@@ -3,14 +3,22 @@
 @section('title', 'Beranda')
 
 @section('content')
-<!-- Hero Section with Modern Gradient -->
-<div class="relative gradient-primary text-white overflow-hidden">
+<!-- Hero Section with Banner Background -->
+<div class="relative text-white overflow-hidden min-h-[600px] flex items-center">
+    <!-- Background Image -->
+    <div class="absolute inset-0">
+        <img src="{{ asset('banner.jpg') }}" alt="STKIP Pasundan Cimahi" class="w-full h-full object-cover">
+    </div>
+    
+    <!-- Dark Overlay for better text readability -->
+    <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60"></div>
+    
     <!-- Animated Background Pattern -->
     <div class="absolute inset-0 opacity-20">
         <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
     </div>
     
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24 w-full">
         <div class="text-center animate-fade-in-up">
             <h1 class="text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">
                 Sistem Survey Edu Metrics

@@ -9,22 +9,18 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyPublicController;
 use Illuminate\Support\Facades\Route;
 
-
 // In routes/web.php or a dedicated cache management route file
-Route::get('/clear-cache', function() {
+Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('config:clear'); // Clear config cache as well
     Artisan::call('route:clear'); // Clear route cache
     Artisan::call('view:clear'); // Clear view cache
-    return "Cache cleared!";
+    Artisan::call('optimize:clear'); // Clear view cache
+
+    return 'Cache cleared!';
 });
 
-// Public Routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/welcome', function () {
-    return redirect()->route('home');
-});
-
+// Public Routes (Surveys can be accessed without login)
 Route::prefix('surveys')->name('surveys.')->group(function () {
     Route::get('/', [SurveyPublicController::class, 'index'])->name('index');
     Route::get('/{survey}', [SurveyPublicController::class, 'show'])->name('show');
@@ -33,14 +29,23 @@ Route::prefix('surveys')->name('surveys.')->group(function () {
     Route::get('/{survey}/thank-you', [SurveyPublicController::class, 'thankYou'])->name('thank-you');
 });
 
-// Dashboard Routes (Protected)
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('index');
+// Protected Routes (Require Authentication)
+Route::middleware('auth')->group(function () {
+    // Home Route (Protected)
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/welcome', function () {
+        return redirect()->route('home');
+    });
 
-    Route::resource('categories', SurveyCategoryController::class);
-    Route::resource('likert-scales', LikertScaleController::class);
-    Route::resource('surveys', SurveyController::class);
-    Route::resource('questions', QuestionController::class);
+    // Dashboard Routes (Protected)
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+        Route::resource('categories', SurveyCategoryController::class);
+        Route::resource('likert-scales', LikertScaleController::class);
+        Route::resource('surveys', SurveyController::class);
+        Route::resource('questions', QuestionController::class);
+    });
 });
 
 // Auth Routes (from Breeze)

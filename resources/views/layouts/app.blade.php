@@ -6,6 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', config('app.name', 'Laravel')) - {{ config('app.name', 'Edu Metrics') }}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpeg') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

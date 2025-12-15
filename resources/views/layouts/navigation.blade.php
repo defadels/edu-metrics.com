@@ -5,9 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('home') }}" class="flex items-center gap-2">
+                        <img src="{{ asset('logo.jpeg') }}" alt="STKIP Pasundan Cimahi" class="w-10 h-10 object-contain rounded-lg">
                         <span class="text-xl font-bold text-gray-900 dark:text-white">
-                            {{ config('app.name', 'Edu Metrics') }}
+                            STKIP PASUNDAN
                         </span>
                     </a>
                 </div>
