@@ -8,7 +8,7 @@
     <div class="metric-card bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 animate-fade-in-up">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Total Survey</h3>
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Total Surveys</h3>
                 <p class="text-4xl font-bold text-gray-900 dark:text-white">{{ $stats['surveys'] }}</p>
             </div>
             <div class="icon-container">
@@ -22,7 +22,7 @@
     <div class="metric-card bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 animate-fade-in-up animate-delay-100">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Kategori</h3>
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Categories</h3>
                 <p class="text-4xl font-bold text-gray-900 dark:text-white">{{ $stats['categories'] }}</p>
             </div>
             <div class="icon-container bg-gradient-to-br from-green-500 to-emerald-600">
@@ -36,7 +36,7 @@
     <div class="metric-card bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 animate-fade-in-up animate-delay-200">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Skala Likert</h3>
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Likert Scales</h3>
                 <p class="text-4xl font-bold text-gray-900 dark:text-white">{{ $stats['likert_scales'] }}</p>
             </div>
             <div class="icon-container bg-gradient-to-br from-purple-500 to-pink-600">
@@ -50,7 +50,7 @@
     <div class="metric-card bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 animate-fade-in-up animate-delay-300">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Pertanyaan</h3>
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Questions</h3>
                 <p class="text-4xl font-bold text-gray-900 dark:text-white">{{ $stats['questions'] }}</p>
             </div>
             <div class="icon-container bg-gradient-to-br from-cyan-500 to-blue-600">
@@ -78,7 +78,7 @@
     <div class="metric-card bg-gradient-to-br from-teal-50 to-emerald-50 dark:from-teal-900/20 dark:to-emerald-900/20 animate-fade-in-up animate-delay-200">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Survey Aktif</h3>
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Active Surveys</h3>
                 <p class="text-4xl font-bold text-gray-900 dark:text-white">{{ $stats['active_surveys'] }}</p>
             </div>
             <div class="icon-container bg-gradient-to-br from-teal-500 to-emerald-600">
@@ -92,7 +92,7 @@
 
 <div class="card-modern animate-fade-in-up animate-delay-300">
     <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Survey Terbaru</h3>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Recent Surveys</h3>
     </div>
     <div class="p-6">
         @if($recentSurveys->count() > 0)
@@ -100,11 +100,11 @@
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Judul</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Kategori</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Category</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Dibuat Oleh</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Created By</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -114,14 +114,14 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $survey->category->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $survey->is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }}">
-                                        {{ $survey->is_active ? 'Aktif' : 'Tidak Aktif' }}
+                                        {{ $survey->is_active ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $survey->creator->name ?? 'N/A' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="{{ route('dashboard.surveys.show', $survey) }}" 
                                        class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition-colors">
-                                        Lihat
+                                        View
                                     </a>
                                 </td>
                             </tr>
@@ -136,7 +136,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                 </div>
-                <p class="text-gray-500 dark:text-gray-400 text-lg">Belum ada survey.</p>
+                <p class="text-gray-500 dark:text-gray-400 text-lg">No surveys yet.</p>
             </div>
         @endif
     </div>

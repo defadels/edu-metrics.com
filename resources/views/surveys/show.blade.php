@@ -14,7 +14,7 @@
                     </span>
                     @if($survey->is_anonymous)
                         <span class="px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300">
-                            Survey Anonim
+                            Anonymous Survey
                         </span>
                     @endif
                 </div>
@@ -30,7 +30,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Tanggal Mulai</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Start Date</div>
                             <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $survey->start_date->format('d M Y H:i') }}</div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Tanggal Berakhir</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">End Date</div>
                             <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $survey->end_date->format('d M Y H:i') }}</div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Jumlah Pertanyaan</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Number of Questions</div>
                             <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $survey->questions->count() }}</div>
                         </div>
                     </div>
@@ -63,8 +63,8 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Estimasi Waktu</div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ ceil($survey->questions->count() * 0.5) }} menit</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Estimated Time</div>
+                            <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ ceil($survey->questions->count() * 0.5) }} minutes</div>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                         <p class="text-yellow-800 dark:text-yellow-200">
-                            <strong>Perhatian:</strong> Anda sudah mengisi survey ini sebelumnya.
+                            <strong>Attention:</strong> You have already completed this survey.
                         </p>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
             <!-- Questions Preview -->
             @if($survey->questions->count() > 0)
                 <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Daftar Pertanyaan</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Question List</h2>
                     <div class="space-y-4">
                         @foreach($survey->questions->sortBy('order') as $index => $question)
                             <div class="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
@@ -103,7 +103,7 @@
                                             </span>
                                             @if($question->is_required)
                                                 <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
-                                                    Wajib
+                                                    Required
                                                 </span>
                                             @endif
                                         </div>
@@ -119,11 +119,11 @@
             <div class="flex gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <a href="{{ route('surveys.index') }}" 
                    class="flex-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-6 py-4 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg">
-                    Kembali
+                    Back
                 </a>
                 <a href="{{ route('surveys.start', $survey) }}" 
                    class="flex-1 text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                    Mulai Mengisi Survey
+                    Start Survey
                 </a>
             </div>
         </div>

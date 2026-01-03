@@ -36,7 +36,7 @@ class QuestionController extends Controller
         Question::create($request->validated());
 
         return redirect()->route('dashboard.questions.index')
-            ->with('success', 'Pertanyaan berhasil dibuat.');
+            ->with('success', 'Question created successfully.');
     }
 
     public function show(Question $question): View
@@ -60,7 +60,7 @@ class QuestionController extends Controller
         $question->update($request->validated());
 
         return redirect()->route('dashboard.questions.index')
-            ->with('success', 'Pertanyaan berhasil diperbarui.');
+            ->with('success', 'Question updated successfully.');
     }
 
     public function destroy(Question $question): RedirectResponse
@@ -68,6 +68,6 @@ class QuestionController extends Controller
         $question->delete();
 
         return redirect()->route('dashboard.questions.index')
-            ->with('success', 'Pertanyaan berhasil dihapus.');
+            ->with('success', 'Question deleted successfully.');
     }
 }

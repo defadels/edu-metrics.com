@@ -37,7 +37,7 @@ class LikertScaleController extends Controller
         $options = [];
         $order = 0;
         for ($i = $minValue; $i <= $maxValue; $i++) {
-            $label = $i === $minValue ? $minLabel : ($i === $maxValue ? $maxLabel : "Nilai {$i}");
+            $label = $i === $minValue ? $minLabel : ($i === $maxValue ? $maxLabel : "Value {$i}");
             $options[] = [
                 'likert_scale_id' => $scale->id,
                 'value' => $i,
@@ -51,7 +51,7 @@ class LikertScaleController extends Controller
         $scale->options()->createMany($options);
 
         return redirect()->route('dashboard.likert-scales.index')
-            ->with('success', 'Skala Likert berhasil dibuat.');
+            ->with('success', 'Likert scale created successfully.');
     }
 
     public function show(LikertScale $likertScale): View
@@ -73,7 +73,7 @@ class LikertScaleController extends Controller
         $likertScale->update($request->validated());
 
         return redirect()->route('dashboard.likert-scales.index')
-            ->with('success', 'Skala Likert berhasil diperbarui.');
+            ->with('success', 'Likert scale updated successfully.');
     }
 
     public function destroy(LikertScale $likertScale): RedirectResponse
@@ -81,6 +81,6 @@ class LikertScaleController extends Controller
         $likertScale->delete();
 
         return redirect()->route('dashboard.likert-scales.index')
-            ->with('success', 'Skala Likert berhasil dihapus.');
+            ->with('success', 'Likert scale deleted successfully.');
     }
 }

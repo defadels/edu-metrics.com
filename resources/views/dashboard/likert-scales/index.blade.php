@@ -1,20 +1,20 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Skala Likert')
-@section('page-title', 'Skala Likert')
+@section('title', 'Likert Scales')
+@section('page-title', 'Likert Scales')
 
 @section('content')
 <div class="mb-6 flex justify-between items-center animate-fade-in-up">
     <div>
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Daftar Skala Likert</h3>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">Kelola skala Likert untuk pertanyaan</p>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Likert Scale List</h3>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">Manage Likert scales for questions</p>
     </div>
     <a href="{{ route('dashboard.likert-scales.create') }}" 
        class="btn-modern bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 inline-flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        <span>Tambah Skala</span>
+        <span>Add Scale</span>
     </a>
 </div>
 
@@ -22,11 +22,11 @@
     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
             <tr>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Nama</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Name</th>
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Range</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Opsi</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Digunakan</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Options</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Used</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Action</th>
             </tr>
         </thead>
         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -50,17 +50,17 @@
                         <div class="flex items-center gap-3">
                             <a href="{{ route('dashboard.likert-scales.show', $scale) }}" 
                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition-colors">
-                                Lihat
+                                View
                             </a>
                             <a href="{{ route('dashboard.likert-scales.edit', $scale) }}" 
                                class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 font-semibold transition-colors">
                                 Edit
                             </a>
-                            <form action="{{ route('dashboard.likert-scales.destroy', $scale) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus skala ini?');">
+                            <form action="{{ route('dashboard.likert-scales.destroy', $scale) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this scale?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-semibold transition-colors">
-                                    Hapus
+                                    Delete
                                 </button>
                             </form>
                         </div>
@@ -74,7 +74,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
                         </div>
-                        <p class="text-gray-500 dark:text-gray-400">Tidak ada skala Likert.</p>
+                        <p class="text-gray-500 dark:text-gray-400">No Likert scales.</p>
                     </td>
                 </tr>
             @endforelse

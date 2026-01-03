@@ -16,7 +16,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Beranda') }}
+                        {{ __('Home') }}
                     </x-nav-link>
                     <x-nav-link :href="route('surveys.index')" :active="request()->routeIs('surveys.*')">
                         {{ __('Survey') }}
@@ -41,10 +41,11 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            @if(Auth::user()->role == 'admin')
                             <x-dropdown-link :href="route('dashboard.index')">
                                 {{ __('Dashboard') }}
                             </x-dropdown-link>
-
+                            @endif
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -64,10 +65,10 @@
                 @else
                     <div class="flex items-center space-x-4">
                         <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                            {{ __('Masuk') }}
+                            {{ __('Log In') }}
                         </x-nav-link>
                         <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('Daftar') }}
+                            {{ __('Register') }}
                         </a>
                     </div>
                 @endauth
@@ -89,7 +90,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                {{ __('Beranda') }}
+                {{ __('Home') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('surveys.index')" :active="request()->routeIs('surveys.*')">
                 {{ __('Survey') }}
@@ -129,10 +130,10 @@
             <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('login')">
-                        {{ __('Masuk') }}
+                        {{ __('Log In') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('register')">
-                        {{ __('Daftar') }}
+                        {{ __('Register') }}
                     </x-responsive-nav-link>
                 </div>
             </div>

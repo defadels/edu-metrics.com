@@ -13,7 +13,7 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Nama Lengkap')" />
+            <x-input-label for="name" :value="__('Full Name')" />
             <x-text-input 
                 id="name" 
                 type="text" 
@@ -44,7 +44,7 @@
 
         <!-- NIM -->
         <div>
-            <x-input-label for="nim" :value="__('NIM (Nomor Induk Mahasiswa)')" />
+            <x-input-label for="nim" :value="__('NIM (Student ID Number)')" />
             <x-text-input 
                 id="nim" 
                 type="text" 
@@ -55,7 +55,7 @@
                 placeholder="Enter your NIM"
             />
             <x-input-error :messages="$errors->get('nim')" class="mt-2" />
-            <p class="mt-1 text-xs text-gray-500">Opsional - Isi jika Anda adalah mahasiswa</p>
+            <p class="mt-1 text-xs text-gray-500">Required</p>
         </div>
 
         <!-- Password -->
@@ -74,7 +74,7 @@
 
         <!-- Confirm Password -->
         <div>
-            <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
             <x-text-input 
                 id="password_confirmation"
                 type="password"
@@ -97,9 +97,9 @@
 
         <div class="text-center pt-4 border-t border-gray-200">
             <p class="text-sm text-gray-600">
-                Sudah punya akun? 
+                Already have an account? 
                 <a href="{{ route('login') }}" class="font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
-                    Masuk
+                    Login
                 </a>
             </p>
         </div>

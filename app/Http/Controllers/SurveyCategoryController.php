@@ -29,7 +29,7 @@ class SurveyCategoryController extends Controller
         SurveyCategory::create($request->validated());
 
         return redirect()->route('dashboard.categories.index')
-            ->with('success', 'Kategori survey berhasil dibuat.');
+            ->with('success', 'Survey category created successfully.');
     }
 
     public function show(SurveyCategory $category): View
@@ -49,7 +49,7 @@ class SurveyCategoryController extends Controller
         $category->update($request->validated());
 
         return redirect()->route('dashboard.categories.index')
-            ->with('success', 'Kategori survey berhasil diperbarui.');
+            ->with('success', 'Survey category updated successfully.');
     }
 
     public function destroy(SurveyCategory $category): RedirectResponse
@@ -57,6 +57,6 @@ class SurveyCategoryController extends Controller
         $category->delete();
 
         return redirect()->route('dashboard.categories.index')
-            ->with('success', 'Kategori survey berhasil dihapus.');
+            ->with('success', 'Survey category deleted successfully.');
     }
 }

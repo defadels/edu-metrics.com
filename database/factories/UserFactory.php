@@ -29,7 +29,31 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => 'mahasiswa',
+            'nim' => fake()->numerify('##########'),
         ];
+    }
+
+    /**
+     * Indicate that the user is an admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+            'nim' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a student.
+     */
+    public function mahasiswa(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'mahasiswa',
+            'nim' => fake()->numerify('##########'),
+        ]);
     }
 
     /**

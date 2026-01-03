@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Edit Skala Likert')
-@section('page-title', 'Edit Skala Likert')
+@section('title', 'Edit Likert Scale')
+@section('page-title', 'Edit Likert Scale')
 
 @section('content')
 <div class="max-w-2xl">
@@ -10,7 +10,7 @@
         @method('PUT')
         
         <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Skala</label>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Scale Name</label>
             <input type="text" name="name" id="name" value="{{ old('name', $likertScale->name) }}" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
             @error('name')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -19,14 +19,14 @@
         
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
-                <label for="min_value" class="block text-sm font-medium text-gray-700 mb-2">Nilai Minimum</label>
+                <label for="min_value" class="block text-sm font-medium text-gray-700 mb-2">Minimum Value</label>
                 <input type="number" name="min_value" id="min_value" value="{{ old('min_value', $likertScale->min_value) }}" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                 @error('min_value')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
             <div>
-                <label for="max_value" class="block text-sm font-medium text-gray-700 mb-2">Nilai Maksimum</label>
+                <label for="max_value" class="block text-sm font-medium text-gray-700 mb-2">Maximum Value</label>
                 <input type="number" name="max_value" id="max_value" value="{{ old('max_value', $likertScale->max_value) }}" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                 @error('max_value')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -36,14 +36,14 @@
         
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
-                <label for="min_label" class="block text-sm font-medium text-gray-700 mb-2">Label Minimum</label>
+                <label for="min_label" class="block text-sm font-medium text-gray-700 mb-2">Minimum Label</label>
                 <input type="text" name="min_label" id="min_label" value="{{ old('min_label', $likertScale->min_label) }}" required maxlength="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                 @error('min_label')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
             <div>
-                <label for="max_label" class="block text-sm font-medium text-gray-700 mb-2">Label Maksimum</label>
+                <label for="max_label" class="block text-sm font-medium text-gray-700 mb-2">Maximum Label</label>
                 <input type="text" name="max_label" id="max_label" value="{{ old('max_label', $likertScale->max_label) }}" required maxlength="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                 @error('max_label')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -53,7 +53,7 @@
         
         <div class="flex justify-end space-x-3">
             <a href="{{ route('dashboard.likert-scales.index') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-                Batal
+                Cancel
             </a>
             <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 Update

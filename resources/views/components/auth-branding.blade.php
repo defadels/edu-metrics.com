@@ -1,4 +1,4 @@
-<div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 relative overflow-hidden min-h-screen">
+<div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-lime-600 via-lime-700 to-lime-800 relative overflow-hidden min-h-screen">
     <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-10">
         <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
@@ -16,11 +16,11 @@
 
         <!-- Content Section -->
         <div class="flex-1 flex flex-col justify-center animate-fade-in-up animate-delay-100">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-shadow-lg leading-tight">
+            {{-- <h2 class="text-4xl md:text-5xl font-bold mb-6 text-shadow-lg leading-tight">
                 SISTEM PENJAMINAN MUTU INTERNAL
-            </h2>
+            </h2> --}}
             <p class="text-lg md:text-xl text-purple-100 leading-relaxed mb-8 max-w-md">
-                Sistem pemeliharaan dan peningkatan mutu pendidikan tinggi secara berkelanjutan di STKIP Pasundan Cimahi. EduMetrics dirancang untuk memastikan seluruh proses penjaminan mutu berjalan efektif, terintegrasi, dan sejalan dengan visi-misi institusi. Platform ini mendukung pemenuhan kebutuhan seluruh stakeholders melalui penyelenggaraan perguruan tinggi yang bermutu, transparan, dan akuntabel.
+               A system for continuous improvement in higher education quality at STKIP Pasundan Cimahi. EduMetrics is designed to ensure the effective and integrated implementation of quality assurance processes in alignment with the institution’s vision and mission. This platform supports the fulfillment of stakeholders’ needs by promoting high-quality, transparent, and accountable higher education.
             </p>
             
             <!-- Download Guide Button -->
@@ -28,13 +28,13 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <span>Download Panduan</span>
+                <span>Download Instruction</span>
             </a>
         </div>
 
         <!-- Copyright -->
         <div class="text-sm text-purple-200 animate-fade-in-up animate-delay-200">
-            © {{ date('Y') }} Sistem Penjaminan Mutu Internal
+            © {{ date('Y') }} EduMetrics
         </div>
     </div>
 </div>

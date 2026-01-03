@@ -79,7 +79,7 @@ class SurveyPublicController extends Controller
     public function submit(Request $request, Survey $survey): RedirectResponse
     {
         if (! $survey->is_active || $survey->start_date > now() || $survey->end_date < now()) {
-            abort(404, 'Survey tidak tersedia');
+            abort(404, 'Survey not available');
         }
 
         $request->validate([
@@ -162,7 +162,7 @@ class SurveyPublicController extends Controller
         ]);
 
         return redirect()->route('surveys.thank-you', $survey)
-            ->with('success', 'Terima kasih! Survey Anda telah berhasil disubmit.');
+            ->with('success', 'Thank you! Your survey has been successfully submitted.');
     }
 
     public function thankYou(Survey $survey): View

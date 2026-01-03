@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikertScaleController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SurveyCategoryController;
 use App\Http\Controllers\SurveyController;
@@ -38,7 +39,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Dashboard Routes (Protected)
-    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::prefix('dashboard')->name('dashboard.')->middleware('auth','role:admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
 
         Route::resource('categories', SurveyCategoryController::class);
@@ -46,6 +47,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('surveys', SurveyController::class);
         Route::resource('questions', QuestionController::class);
     });
+
+    // Profile Routes (Protected)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Auth Routes (from Breeze)

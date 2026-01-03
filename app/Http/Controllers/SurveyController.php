@@ -37,7 +37,7 @@ class SurveyController extends Controller
         Survey::create($data);
 
         return redirect()->route('dashboard.surveys.index')
-            ->with('success', 'Survey berhasil dibuat.');
+            ->with('success', 'Survey created successfully.');
     }
 
     public function show(Survey $survey): View
@@ -59,7 +59,7 @@ class SurveyController extends Controller
         $survey->update($request->validated());
 
         return redirect()->route('dashboard.surveys.index')
-            ->with('success', 'Survey berhasil diperbarui.');
+            ->with('success', 'Survey updated successfully.');
     }
 
     public function destroy(Survey $survey): RedirectResponse
@@ -67,6 +67,6 @@ class SurveyController extends Controller
         $survey->delete();
 
         return redirect()->route('dashboard.surveys.index')
-            ->with('success', 'Survey berhasil dihapus.');
+            ->with('success', 'Survey deleted successfully.');
     }
 }

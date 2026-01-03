@@ -10,10 +10,10 @@
         @method('PUT')
         
         <div class="mb-6">
-            <x-input-label for="category_id" :value="__('Kategori')" />
+            <x-input-label for="category_id" :value="__('Category')" />
             <select name="category_id" id="category_id" required 
                     class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white transition-all duration-300">
-                <option value="">Pilih Kategori</option>
+                <option value="">Select Category</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ old('category_id', $survey->category_id) == $category->id ? 'selected' : '' }}>
                         {{ $category->name }}
@@ -26,13 +26,13 @@
         </div>
         
         <div class="mb-6">
-            <x-input-label for="title" :value="__('Judul Survey')" />
+            <x-input-label for="title" :value="__('Survey Title')" />
             <x-text-input 
                 id="title" 
                 name="title" 
                 :value="old('title', $survey->title)" 
                 required 
-                placeholder="Contoh: Evaluasi Kinerja Dosen Semester Ganjil 2024"
+                placeholder="Example: Lecturer Performance Evaluation Odd Semester 2024"
             />
             @error('title')
                 <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -40,13 +40,13 @@
         </div>
         
         <div class="mb-6">
-            <x-input-label for="description" :value="__('Deskripsi')" />
+            <x-input-label for="description" :value="__('Description')" />
             <textarea 
                 name="description" 
                 id="description" 
                 rows="4" 
                 class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white transition-all duration-300 resize-none"
-                placeholder="Deskripsi survey...">{{ old('description', $survey->description) }}</textarea>
+                placeholder="Survey description...">{{ old('description', $survey->description) }}</textarea>
             @error('description')
                 <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
             @enderror
@@ -54,7 +54,7 @@
         
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div>
-                <x-input-label for="start_date" :value="__('Tanggal Mulai')" />
+                <x-input-label for="start_date" :value="__('Start Date')" />
                 <x-text-input 
                     id="start_date" 
                     type="datetime-local" 
@@ -67,7 +67,7 @@
                 @enderror
             </div>
             <div>
-                <x-input-label for="end_date" :value="__('Tanggal Selesai')" />
+                <x-input-label for="end_date" :value="__('End Date')" />
                 <x-text-input 
                     id="end_date" 
                     type="datetime-local" 
@@ -91,7 +91,7 @@
                     class="w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:ring-2 cursor-pointer"
                 >
                 <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                    Aktif
+                    Active
                 </span>
             </label>
             <label class="flex items-center cursor-pointer group">
@@ -103,7 +103,7 @@
                     class="w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:ring-2 cursor-pointer"
                 >
                 <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                    Anonim
+                    Anonymous
                 </span>
             </label>
         </div>
@@ -111,7 +111,7 @@
         <div class="flex justify-end gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
             <a href="{{ route('dashboard.surveys.index') }}" 
                class="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transform hover:scale-105 transition-all duration-300">
-                Batal
+                Cancel
             </a>
             <button type="submit" 
                     class="btn-modern bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700">

@@ -74,9 +74,9 @@
 
         <div class="text-center pt-4 border-t border-gray-200">
             <p class="text-sm text-gray-600">
-                    Belum punya akun? 
+                    Don't have an account? 
                 <a href="{{ route('register') }}" class="font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
-                        Daftar sekarang
+                        Register now
                     </a>
                 </p>
             </div>

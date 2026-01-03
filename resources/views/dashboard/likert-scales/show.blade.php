@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Detail Skala Likert')
-@section('page-title', 'Detail Skala Likert')
+@section('title', 'Likert Scale Details')
+@section('page-title', 'Likert Scale Details')
 
 @section('content')
 <div class="max-w-4xl">
@@ -15,11 +15,11 @@
                 <a href="{{ route('dashboard.likert-scales.edit', $likertScale) }}" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
                     Edit
                 </a>
-                <form action="{{ route('dashboard.likert-scales.destroy', $likertScale) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus skala ini?');">
+                <form action="{{ route('dashboard.likert-scales.destroy', $likertScale) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this scale?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                        Hapus
+                        Delete
                     </button>
                 </form>
             </div>
@@ -32,15 +32,15 @@
     </div>
     
     <div class="bg-white rounded-lg shadow p-6">
-        <h4 class="text-lg font-semibold text-gray-900 mb-4">Opsi Skala ({{ $likertScale->options->count() }})</h4>
+        <h4 class="text-lg font-semibold text-gray-900 mb-4">Scale Options ({{ $likertScale->options->count() }})</h4>
         @if($likertScale->options->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nilai</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Value</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Label</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Urutan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -55,12 +55,12 @@
                 </table>
             </div>
         @else
-            <p class="text-gray-500">Belum ada opsi dalam skala ini.</p>
+            <p class="text-gray-500">No options in this scale yet.</p>
         @endif
     </div>
     
     <div class="mt-4">
-        <a href="{{ route('dashboard.likert-scales.index') }}" class="text-blue-600 hover:text-blue-900">← Kembali ke daftar</a>
+        <a href="{{ route('dashboard.likert-scales.index') }}" class="text-blue-600 hover:text-blue-900">← Back to list</a>
     </div>
 </div>
 @endsection
