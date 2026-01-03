@@ -23,7 +23,7 @@
             <x-auth-branding />
 
             <!-- Right Side - Form -->
-            <div class="flex-1 flex items-center justify-center relative overflow-hidden min-h-screen">
+            <div class="flex-1 flex items-center justify-center relative overflow-hidden lg:min-h-screen py-10 lg:py-0">
                 <!-- Background Image -->
                 <div class="absolute inset-0">
                     <img src="{{ asset('banner.jpg') }}" alt="STKIP Pasundan Cimahi" class="w-full h-full object-cover">
