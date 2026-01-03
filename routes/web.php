@@ -9,6 +9,8 @@ use App\Http\Controllers\SurveyCategoryController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyPublicController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Middleware\AccessForRoles;
 
 // In routes/web.php or a dedicated cache management route file
 Route::get('/clear-cache', function () {
@@ -39,7 +41,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Dashboard Routes (Protected)
-    Route::prefix('dashboard')->name('dashboard.')->middleware('auth','role:admin')->group(function () {
+    Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', AccessForRoles::class])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
 
         Route::resource('categories', SurveyCategoryController::class);
