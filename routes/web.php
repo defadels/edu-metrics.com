@@ -31,6 +31,7 @@ Route::get('/seeder', function (){
 // Public Routes (Surveys can be accessed without login)
 Route::prefix('surveys')->name('surveys.')->group(function () {
     Route::get('/', [SurveyPublicController::class, 'index'])->name('index');
+    Route::get('/history', [SurveyPublicController::class, 'history'])->name('history');
     Route::get('/{survey}', [SurveyPublicController::class, 'show'])->name('show');
     Route::get('/{survey}/start', [SurveyPublicController::class, 'start'])->name('start');
     Route::post('/{survey}/submit', [SurveyPublicController::class, 'submit'])->name('submit');

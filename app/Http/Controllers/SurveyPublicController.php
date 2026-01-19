@@ -169,4 +169,15 @@ class SurveyPublicController extends Controller
     {
         return view('surveys.thank-you', compact('survey'));
     }
+
+    public function history(): View
+    {
+        $responses = Response::where('user_id', Auth::id())
+            ->where('is_completed', true)
+            ->with(['survey.category'])
+            ->latest('completed_at')
+            ->paginate(10);
+
+        return view('surveys.history', compact('responses'));
+    }
 }
