@@ -1,26 +1,31 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-theme-primary border-b border-white/10 sticky top-0 z-50 shadow-lg">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('logo.jpeg') }}" alt="STKIP Pasundan Cimahi" class="w-10 h-10 object-contain rounded-lg">
-                        <span class="text-xl font-bold text-gray-900 dark:text-white">
-                            STKIP PASUNDAN
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                        <div class="bg-white p-1 rounded-lg shadow-inner group-hover:scale-110 transition-transform duration-200">
+                            <img src="{{ asset('logo.jpeg') }}" alt="Logo" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-xl font-extrabold text-white tracking-tight">
+                            Instrumen Kepuasan
                         </span>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('surveys.index')" :active="request()->routeIs('surveys.*')">
-                        {{ __('Survey') }}
-                    </x-nav-link>
+                <div class="hidden space-x-1 sm:-my-px sm:ml-10 sm:flex">
+                    <a href="{{ route('surveys.index') }}" 
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition duration-150 ease-in-out {{ request()->routeIs('surveys.index') ? 'bg-white/20 text-white' : '' }}">
+                        {{ __('Isi Survei') }}
+                    </a>
+                    @auth
+                    <a href="{{ route('surveys.history') }}" 
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition duration-150 ease-in-out {{ request()->routeIs('surveys.history') ? 'bg-white/20 text-white' : '' }}">
+                        {{ __('Riwayat Survei') }}
+                    </a>
+                    @endauth
                 </div>
             </div>
 
@@ -29,8 +34,8 @@
                 @auth
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-lg text-white hover:bg-white/10 focus:outline-none transition ease-in-out duration-150">
+                                <div>{{ Auth::user()->name }}</div> <span class="mx-1 opacity-50">|</span> <div class="text-xs uppercase opacity-75">{{ Auth::user()->role }}</div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -63,11 +68,11 @@
                         </x-slot>
                     </x-dropdown>
                 @else
-                    <div class="flex items-center space-x-4">
-                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    <div class="flex items-center space-x-2">
+                        <a href="{{ route('login') }}" class="text-white/80 hover:text-white px-4 py-2 text-sm font-medium transition-colors">
                             {{ __('Log In') }}
-                        </x-nav-link>
-                        <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        </a>
+                        <a href="{{ route('register') }}" class="px-4 py-2 bg-theme-active text-white rounded-lg text-sm font-bold shadow-lg hover:bg-theme-active/90 transform hover:scale-105 transition-all">
                             {{ __('Register') }}
                         </a>
                     </div>

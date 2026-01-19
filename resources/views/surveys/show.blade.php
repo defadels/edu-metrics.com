@@ -3,129 +3,75 @@
 @section('title', $survey->title)
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="card-modern animate-fade-in-up">
-        <div class="p-8 lg:p-12">
-            <!-- Survey Header -->
-            <div class="mb-8">
-                <div class="flex items-center justify-between mb-6">
-                    <span class="px-4 py-2 text-sm font-semibold rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 dark:from-indigo-900/30 dark:to-purple-900/30 dark:text-indigo-300">
-                        {{ $survey->category->name }}
-                    </span>
-                    @if($survey->is_anonymous)
-                        <span class="px-4 py-2 text-sm font-semibold rounded-full bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300">
-                            Anonymous Survey
-                        </span>
-                    @endif
+<div class="bg-theme-primary text-white py-12 mb-10 shadow-inner">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-4">
+            <a href="{{ route('surveys.index') }}" class="text-white/60 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+            <span class="px-3 py-1 text-xs font-bold rounded-lg bg-white/10 text-white uppercase tracking-wider">
+                {{ $survey->category->name }}
+            </span>
+        </div>
+        <h1 class="text-3xl font-bold mb-2">{{ $survey->title }}</h1>
+        <p class="text-white/80">Informasi detail instrumen kuesioner</p>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+    <div class="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-gray-100 flex flex-col items-center text-center">
+        <div class="w-20 h-20 bg-theme-primary/5 text-theme-primary rounded-2xl flex items-center justify-center mb-8">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ $survey->title }}</h2>
+        
+        @if($survey->description)
+            <p class="text-gray-500 mb-10 leading-relaxed max-w-2xl">
+                {{ $survey->description }}
+            </p>
+        @endif
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-10 text-left">
+            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                <div class="text-xs text-gray-400 font-bold uppercase mb-1">Jumlah Pertanyaan</div>
+                <div class="text-lg font-bold text-gray-900">{{ $survey->questions->count() }} Soal</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                <div class="text-xs text-gray-400 font-bold uppercase mb-1">Batas Waktu Pengisian</div>
+                <div class="text-lg font-bold text-gray-900">{{ $survey->end_date->format('d F Y') }}</div>
+            </div>
+        </div>
+
+        @if($hasResponded)
+            <div class="w-full p-6 bg-amber-50 rounded-2xl border border-amber-100 mb-10 flex items-center gap-4 text-left">
+                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600 shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
                 </div>
-                <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">{{ $survey->title }}</h1>
-                @if($survey->description)
-                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">{{ $survey->description }}</p>
-                @endif
-                <div class="grid grid-cols-2 gap-6 p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-xl">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Start Date</div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $survey->start_date->format('d M Y H:i') }}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">End Date</div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $survey->end_date->format('d M Y H:i') }}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Number of Questions</div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $survey->questions->count() }}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Estimated Time</div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ ceil($survey->questions->count() * 0.5) }} minutes</div>
-                        </div>
-                    </div>
+                <div>
+                    <h4 class="font-bold text-amber-900 leading-tight">Anda Sudah Mengisi Instrumen Ini</h4>
+                    <p class="text-amber-700 text-sm">Jawaban Anda sudah kami terima. Terima kasih atas partisipasi Anda.</p>
                 </div>
             </div>
+        @endif
 
-            <!-- Warning if already responded -->
-            @if($hasResponded)
-                <div class="mb-8 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        <p class="text-yellow-800 dark:text-yellow-200">
-                            <strong>Attention:</strong> You have already completed this survey.
-                        </p>
-                    </div>
-                </div>
-            @endif
-
-            <!-- Questions Preview -->
-            @if($survey->questions->count() > 0)
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Question List</h2>
-                    <div class="space-y-4">
-                        @foreach($survey->questions->sortBy('order') as $index => $question)
-                            <div class="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
-                                <div class="flex items-start gap-4">
-                                    <span class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-xl flex items-center justify-center font-bold text-sm shadow-lg">
-                                        {{ $index + 1 }}
-                                    </span>
-                                    <div class="flex-1">
-                                        <p class="text-gray-900 dark:text-white font-semibold mb-3 text-lg">{{ $question->question_text }}</p>
-                                        <div class="flex items-center gap-2 flex-wrap">
-                                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
-                                                {{ $question->question_type }}
-                                            </span>
-                                            @if($question->is_required)
-                                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
-                                                    Required
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
-            <!-- Action Buttons -->
-            <div class="flex gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <a href="{{ route('surveys.index') }}" 
-                   class="flex-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-6 py-4 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg">
-                    Back
-                </a>
+        <div class="w-full flex flex-col sm:flex-row gap-4">
+            <a href="{{ route('surveys.index') }}" 
+               class="flex-1 text-center py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold hover:bg-gray-200 transition-colors">
+                Kembali
+            </a>
+            @if(!$hasResponded)
                 <a href="{{ route('surveys.start', $survey) }}" 
-                   class="flex-1 text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                    Start Survey
+                   class="flex-1 text-center py-4 bg-theme-active text-white rounded-2xl font-bold shadow-lg shadow-theme-active/20 hover:bg-theme-active/90 transform hover:-translate-y-0.5 transition-all">
+                    Mulai Isi Kuesioner
                 </a>
-            </div>
+            @endif
         </div>
     </div>
 </div>

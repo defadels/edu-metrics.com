@@ -1,54 +1,29 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Profile Information') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information and email address.") }}
-        </p>
-    </header>
-
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
-
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="space-y-6">
         @csrf
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <label for="name" class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-tight">Nama Lengkap</label>
+            <input id="name" name="name" type="text" 
+                   class="block w-full px-5 py-4 rounded-2xl border-gray-200 bg-gray-50 focus:border-theme-primary focus:ring-theme-primary/10 transition-all font-medium" 
+                   value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <label for="email" class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-tight">Email</label>
+            <input id="email" name="email" type="email" 
+                   class="block w-full px-5 py-4 rounded-2xl border-gray-200 bg-gray-50 focus:border-theme-primary focus:ring-theme-primary/10 transition-all font-medium" 
+                   value="{{ old('email', $user->email) }}" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex items-center gap-4 pt-4">
+            <button type="submit" 
+                    class="w-full sm:w-auto px-10 py-4 bg-theme-primary text-white rounded-2xl font-bold shadow-xl shadow-theme-primary/20 hover:bg-theme-primary/90 transform hover:-translate-y-0.5 transition-all">
+                Simpan Perubahan
+            </button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -56,8 +31,8 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                    class="text-sm font-bold text-theme-active"
+                >Tersimpan.</p>
             @endif
         </div>
     </form>
