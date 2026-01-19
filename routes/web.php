@@ -23,6 +23,11 @@ Route::get('/clear-cache', function () {
     return 'Cache cleared!';
 });
 
+Route::get('/seeder', function (){
+    Artisan:call('db:seed');
+    return 'Database seeded!';
+});
+
 // Public Routes (Surveys can be accessed without login)
 Route::prefix('surveys')->name('surveys.')->group(function () {
     Route::get('/', [SurveyPublicController::class, 'index'])->name('index');
