@@ -10,7 +10,7 @@
         <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your survey categories</p>
     </div>
     <a href="{{ route('dashboard.categories.create') }}" 
-       class="btn-modern bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 inline-flex items-center gap-2">
+       class="btn-modern bg-theme-active hover:bg-theme-active/90 inline-flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
@@ -18,9 +18,9 @@
     </a>
 </div>
 
-<div class="card-modern overflow-hidden animate-fade-in-up animate-delay-100">
-    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
+<div class="card-modern overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 table-modern">
+        <thead>
             <tr>
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Name</th>
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Description</th>

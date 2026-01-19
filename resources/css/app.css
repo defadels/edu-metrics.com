@@ -19,6 +19,14 @@
     body {
         font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     }
+
+    :root {
+        --theme-primary: #5d315d;
+        --theme-active: #be5161;
+        --theme-sidebar-bg: #ffffff;
+        --theme-content-bg: #f3f6f9;
+        --theme-text-sidebar: #333333;
+    }
 }
 
 @layer components {
@@ -118,9 +126,9 @@
 
     /* Metric Card with Gradient */
     .metric-card {
-        @apply relative overflow-hidden rounded-2xl p-6;
+        @apply bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700;
         @apply transform transition-all duration-300 ease-out;
-        @apply hover:scale-105 hover:shadow-2xl;
+        @apply hover:shadow-md hover:-translate-y-1;
     }
     
     .metric-card::before {
@@ -129,8 +137,13 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        height: 3px;
+        background: var(--theme-primary);
+        @apply rounded-t-xl opacity-0 transition-opacity duration-300;
+    }
+
+    .metric-card:hover::before {
+        @apply opacity-100;
     }
 
     /* Fade In Animation */
@@ -193,9 +206,9 @@
 
     /* Icon Container */
     .icon-container {
-        @apply w-12 h-12 rounded-xl flex items-center justify-center;
-        @apply bg-gradient-to-br from-indigo-500 to-purple-600;
-        @apply shadow-lg;
+        @apply w-12 h-12 rounded-lg flex items-center justify-center;
+        @apply bg-gray-50 dark:bg-gray-700 text-theme-primary;
+        @apply transition-colors duration-300;
     }
 
     /* Ripple Effect */
@@ -213,6 +226,35 @@
             transform: scale(4);
             opacity: 0;
         }
+    }
+
+    /* Dashboard Redesign Classes */
+    .bg-theme-primary {
+        background-color: var(--theme-primary);
+    }
+    
+    .bg-theme-active {
+        background-color: var(--theme-active);
+    }
+    
+    .text-theme-primary {
+        color: var(--theme-primary);
+    }
+
+    .sidebar-item {
+        @apply flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all duration-200 text-gray-700 hover:bg-gray-100;
+    }
+
+    .sidebar-item-active {
+        @apply bg-theme-active text-white hover:bg-theme-active/90;
+    }
+
+    .dashboard-header {
+        @apply bg-theme-primary text-white;
+    }
+
+    .table-modern thead th {
+        @apply bg-gray-50 text-gray-600 font-bold border-b border-gray-200;
     }
 }
 
