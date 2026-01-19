@@ -24,7 +24,7 @@ Route::get('/clear-cache', function () {
 });
 
 Route::get('/seeder', function (){
-    Artisan:call('db:seed');
+    Artisan::call('db:seed');
     return 'Database seeded!';
 });
 
