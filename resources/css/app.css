@@ -229,18 +229,6 @@
     }
 
     /* Dashboard Redesign Classes */
-    .bg-theme-primary {
-        background-color: var(--theme-primary);
-    }
-    
-    .bg-theme-active {
-        background-color: var(--theme-active);
-    }
-    
-    .text-theme-primary {
-        color: var(--theme-primary);
-    }
-
     .sidebar-item {
         @apply flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all duration-200 text-gray-700 hover:bg-gray-100;
     }

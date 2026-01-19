@@ -14,6 +14,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                theme: {
+                    primary: '#5d315d',
+                    active: '#be5161',
+                }
+            }
         },
     },
 
