@@ -10,6 +10,7 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyPublicController;
 use App\Http\Controllers\ScaleOptionController;
 use App\Http\Controllers\SurveyResponseController;
+use App\Http\Controllers\RespondentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Middleware\AccessForRoles;
@@ -57,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('likert-scales', LikertScaleController::class);
         Route::resource('surveys', SurveyController::class);
         Route::resource('questions', QuestionController::class);
+        Route::resource('respondents', RespondentController::class)->only(['index', 'show']);
         
         Route::get('surveys/{survey}/responses', [SurveyResponseController::class, 'index'])->name('surveys.responses.index');
         Route::get('surveys/{survey}/responses/{response}', [SurveyResponseController::class, 'show'])->name('surveys.responses.show');
