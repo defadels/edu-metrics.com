@@ -45,7 +45,7 @@
                                 {{ $response->completed_at->format('d/m/Y H:i') }}
                             </td>
                             <td class="px-6 py-6 text-center">
-                                <a href="{{ route('surveys.show', $response->survey) }}" class="inline-flex items-center px-4 py-2 bg-theme-primary/10 text-theme-primary rounded-xl font-bold text-sm hover:bg-theme-primary/20 transition-colors">
+                                <a href="{{ route('surveys.history.show', $response) }}" class="inline-flex items-center px-4 py-2 bg-theme-primary/10 text-theme-primary rounded-xl font-bold text-sm hover:bg-theme-primary/20 transition-colors">
                                     Detail
                                 </a>
                             </td>
