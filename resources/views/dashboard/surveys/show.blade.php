@@ -12,6 +12,9 @@
                 <p class="text-sm text-gray-500 mt-1">Category: {{ $survey->category->name }}</p>
             </div>
             <div class="flex space-x-2">
+                <a href="{{ route('dashboard.surveys.responses.index', $survey) }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    View Responses
+                </a>
                 <a href="{{ route('dashboard.surveys.edit', $survey) }}" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
                     Edit
                 </a>

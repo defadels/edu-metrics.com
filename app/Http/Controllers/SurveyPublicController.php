@@ -180,4 +180,20 @@ class SurveyPublicController extends Controller
 
         return view('surveys.history', compact('responses'));
     }
+
+    public function showHistory(Response $response): View
+    {
+        if ($response->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized access to response');
+        }
+
+        $response->load([
+            'survey.category',
+            'survey.questions.options',
+            'survey.questions.likertScale.options',
+            'answers.selectedOption'
+        ]);
+
+        return view('surveys.history_detail', compact('response'));
+    }
 }

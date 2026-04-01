@@ -9,6 +9,7 @@ use App\Http\Controllers\SurveyCategoryController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyPublicController;
 use App\Http\Controllers\ScaleOptionController;
+use App\Http\Controllers\SurveyResponseController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Middleware\AccessForRoles;
@@ -33,6 +34,7 @@ Route::get('/seeder', function (){
 Route::prefix('surveys')->name('surveys.')->group(function () {
     Route::get('/', [SurveyPublicController::class, 'index'])->name('index');
     Route::get('/history', [SurveyPublicController::class, 'history'])->name('history');
+    Route::get('/history/{response}', [SurveyPublicController::class, 'showHistory'])->name('history.show');
     Route::get('/{survey}', [SurveyPublicController::class, 'show'])->name('show');
     Route::get('/{survey}/start', [SurveyPublicController::class, 'start'])->name('start');
     Route::post('/{survey}/submit', [SurveyPublicController::class, 'submit'])->name('submit');
@@ -55,6 +57,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('likert-scales', LikertScaleController::class);
         Route::resource('surveys', SurveyController::class);
         Route::resource('questions', QuestionController::class);
+        
+        Route::get('surveys/{survey}/responses', [SurveyResponseController::class, 'index'])->name('surveys.responses.index');
+        Route::get('surveys/{survey}/responses/{response}', [SurveyResponseController::class, 'show'])->name('surveys.responses.show');
 
         Route::get('likert-scale/{likertScale}/scale-option', [ScaleOptionController::class, 'edit'])->name('scale-option.edit');
         Route::put('likert-scale/{likertScale}/scale-option', [ScaleOptionController::class, 'update'])->name('scale-option.update');
