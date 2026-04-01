@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LikertScaleOption extends Model
 {
+
+
+    protected $table = 'likert_scale_options';
     protected $fillable = [
         'likert_scale_id',
         'value',

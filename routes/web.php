@@ -8,6 +8,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SurveyCategoryController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyPublicController;
+use App\Http\Controllers\ScaleOptionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Middleware\AccessForRoles;
@@ -54,6 +55,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('likert-scales', LikertScaleController::class);
         Route::resource('surveys', SurveyController::class);
         Route::resource('questions', QuestionController::class);
+
+        Route::get('likert-scale/{likertScale}/scale-option', [ScaleOptionController::class, 'edit'])->name('scale-option.edit');
+        Route::put('likert-scale/{likertScale}/scale-option', [ScaleOptionController::class, 'update'])->name('scale-option.update');
     });
 
     // Profile Routes (Protected)

@@ -12,7 +12,7 @@
                     <p class="text-sm text-gray-500 mt-1">Range: {{ $likertScale->min_value }} -
                         {{ $likertScale->max_value }}</p>
                 </div>
-                <div class="flex space-x-2">
+                {{-- <div class="flex space-x-2">
                     <a href="{{ route('dashboard.likert-scales.edit', $likertScale) }}"
                         class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
                         Edit
@@ -25,7 +25,7 @@
                             Delete
                         </button>
                     </form>
-                </div>
+                </div> --}}
             </div>
 
             <div class="mb-4">
@@ -46,12 +46,12 @@
                     </h4>
                 </div>
 
-                <div class="flex space-x-2">
-                    <a href="{{ route('dashboard.scale-option.edit', ['likertScale' => $likertScale]) }}"
+                {{-- <div class="flex space-x-2">
+                    <a href="{{ route('dashboard.likert-scales.edit', $likertScale) }}"
                         class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
                         Edit
                     </a>
-                </div>
+                </div> --}}
             </div>
 
             @if ($likertScale->options->count() > 0)
@@ -65,13 +65,38 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            @foreach ($likertScale->options->sortBy('order') as $option)
+                            <form method="POST" action="{{ route('dashboard.scale-option.update', $likertScale) }}">
+                                @csrf
+                                @method('PUT')
+                                @foreach ($likertScale->options->sortBy('order') as $option)
+                                    <input type="hidden" value="{{ $option->id }}" name="id" />
+
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-900">
+                                            <input value="{{ $option->value }}" name="options[{{ $option->id }}][value]"
+                                                class="w-full border border-gray-300 rounded-lg px-2 py-1" />
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-900">
+                                            <input value="{{ $option->label }}" name="options[{{ $option->id }}][label]"
+                                                class="w-full border border-gray-300 rounded-lg px-2 py-1" />
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <input value="{{ $option->order }}" name="options[{{ $option->id }}][order]"
+                                                class="w-full border border-gray-300 rounded-lg px-2 py-1" />
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                                 <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $option->value }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $option->label }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ $option->order }}</td>
+                                    <td colspan="3" class="px-6 py-4 text-sm text-gray-900">
+                                        <button type="submit"
+                                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                            Update Data
+                                        </button>
+                                    </td>
                                 </tr>
-                            @endforeach
+
+                            </form>
                         </tbody>
                     </table>
                 </div>
