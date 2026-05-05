@@ -22,7 +22,7 @@ class SurveyResponseController extends Controller
 
     public function show(Survey $survey, Response $response): View
     {
-        if ($response->survey_id !== $survey->id) {
+        if ($response->survey_id != $survey->id) {
             abort(404, 'Response not found for this survey');
         }
 
