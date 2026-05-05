@@ -31,6 +31,17 @@ Route::get('/seeder', function (){
     return 'Database seeded!';
 });
 
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    $output = Artisan::output();
+
+    if (str_contains($output, 'Nothing to migrate')) {
+        return 'Tidak ada yang di Migrate';
+    }
+
+    return nl2br($output);
+});
+
 // Public Routes (Surveys can be accessed without login)
 Route::prefix('surveys')->name('surveys.')->group(function () {
     Route::get('/', [SurveyPublicController::class, 'index'])->name('index');
