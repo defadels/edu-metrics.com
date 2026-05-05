@@ -91,12 +91,12 @@ class SurveyPublicController extends Controller
         $response = Response::findOrFail($request->input('response_id'));
 
         // Validate response belongs to survey
-        if ($response->survey_id !== $survey->id) {
+        if ($response->survey_id != $survey->id) {
             abort(403);
         }
 
         // Validate user ownership if not anonymous
-        if (! $survey->is_anonymous && Auth::check() && $response->user_id !== Auth::id()) {
+        if (! $survey->is_anonymous && Auth::check() && $response->user_id != Auth::id()) {
             abort(403);
         }
 
@@ -109,7 +109,7 @@ class SurveyPublicController extends Controller
             $question = Question::findOrFail($answerData['question_id']);
 
             // Validate question belongs to survey
-            if ($question->survey_id !== $survey->id) {
+            if ($question->survey_id != $survey->id) {
                 continue;
             }
 

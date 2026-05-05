@@ -11,7 +11,7 @@ class RespondentController extends Controller
     public function index(): View
     {
         // Get all users who have the role 'user', counting their completed survey responses
-        $respondents = User::where('role', 'user')
+        $respondents = User::where('role', 'mahasiswa')
             ->withCount(['responses' => function ($query) {
                 $query->where('is_completed', true);
             }])
@@ -24,7 +24,7 @@ class RespondentController extends Controller
     public function show(User $respondent): View
     {
         // We ensure we only show profiles of users with role 'user'
-        if ($respondent->role !== 'user') {
+        if ($respondent->role !== 'mahasiswa') {
             abort(404, 'Respondent not found.');
         }
 
