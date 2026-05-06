@@ -16,8 +16,9 @@ export default {
             },
             colors: {
                 theme: {
-                    primary: '#5d315d',
-                    active: '#be5161',
+                    primary: '#FFFF98',
+                    active: '#8B0000',
+                    green: '#006400',
                 }
             }
         },

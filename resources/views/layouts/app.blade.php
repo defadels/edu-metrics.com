@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', config('app.name', 'Laravel')) - {{ config('app.name', 'Edu Metrics') }}</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpeg') }}">
+    {{-- <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpeg') }}"> --}}
+    <link rel="icon" href="{{ asset('logo.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,13 +19,14 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="font-sans antialiased bg-[#f3f6f9] text-gray-900">
     <div class="min-h-screen flex flex-col">
         @include('layouts.navigation')
 
         <!-- Page Content -->
         <main class="flex-grow">
-            @if(isset($slot))
+            @if (isset($slot))
                 {{ $slot }}
             @else
                 @yield('content')
@@ -31,4 +34,5 @@
         </main>
     </div>
 </body>
+
 </html>
