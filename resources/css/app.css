@@ -21,10 +21,10 @@
     }
 
     :root {
-        --theme-primary: #5d315d;
-        --theme-active: #be5161;
-        --theme-sidebar-bg: #ffffff;
-        --theme-content-bg: #f3f6f9;
+        --theme-primary: #006400;
+        --theme-active: #8B0000;
+        --theme-sidebar-bg: #FFFFE0;
+        --theme-content-bg: #F3F6F9;
         --theme-text-sidebar: #333333;
     }
 }
