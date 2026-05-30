@@ -43,15 +43,16 @@
                 class="form-select w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm mt-1">
                 <option value="">Select Program Study</option>
                 <option value="Agroteknologi">Agroteknologi</option>
+                <option value="Akuntansi dan Agribisnis">Akuntansi dan Agribisnis</option>
+                <option value="Ilmu Pemerintahan">Ilmu Pemerintahan</option>
+                <option value="Ilmu Keperawatan">Ilmu Keperawatan</option>
+                <option value="Matematika">Matematika</option>
                 <option value="Pendidikan Geografi">Pendidikan Geografi</option>
                 <option value="Pendidikan Bahasa Inggris">Pendidikan Bahasa Inggris</option>
                 <option value="Pendidikan Bahasa dan Sastra Indonesia">Pendidikan Bahasa dan Sastra Indonesia</option>
                 <option value="Pendidikan IPS">Pendidikan IPS</option>
                 <option value="Teknik Informatika">Teknik Informatika</option>
                 <option value="Sistem Informasi">Sistem Informasi</option>
-                <option value="Ilmu Pemerintahan">Ilmu Pemerintahan</option>
-                <option value="Matematika">Matematika</option>
-                <option value="Ilmu Keperawatan">Ilmu Keperawatan</option>
             </select>
             <x-input-error :messages="$errors->get('program_study')" class="mt-2" />
             <p class="mt-1 text-xs text-gray-500">Required</p>
