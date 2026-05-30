@@ -73,7 +73,11 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Belum ada instrumen tersedia</h3>
                 <p class="text-gray-500 mb-8">Silakan cek kembali nanti atau hubungi administrator.</p>
-                <a href="{{ route('home') }}" class="text-theme-primary font-bold hover:underline">Kembali ke Home</a>
+                <a href="{{ route('home') }}"
+                    class="w-full text-center py-3.5 bg-theme-active text-white rounded-xl font-bold shadow-lg shadow-theme-active/20 hover:bg-theme-active/90 transform hover:-translate-y-0.5 transition-all inline-block">
+                    Kembali
+                    ke
+                    Home</a>
             </div>
         @endif
     </div>

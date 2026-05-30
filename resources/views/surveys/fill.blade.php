@@ -37,9 +37,9 @@
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-100">
                                 <th
-                                    class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-16 text-center">
+                                    class="px-6 py-4 text-xs font-bold text-black uppercase tracking-wider w-16 text-center">
                                     No</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Pernyataan
+                                <th class="px-6 py-4 text-xs font-bold text-black uppercase tracking-wider">Pernyataan
                                 </th>
 
                                 @php
@@ -53,7 +53,7 @@ $options = $firstLikert
 
                                 @foreach ($options as $option)
                                     <th
-                                        class="px-4 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center w-24">
+                                        class="px-4 py-4 text-xs font-bold text-black uppercase tracking-wider text-center w-24">
                                         {{ $option->label }}
                                     </th>
                                 @endforeach
@@ -62,11 +62,11 @@ $options = $firstLikert
                         <tbody class="divide-y divide-gray-50">
                             @foreach ($survey->questions->sortBy('order') as $index => $question)
                                 <tr class="hover:bg-gray-50/50 transition-colors">
-                                    <td class="px-6 py-6 text-center font-bold text-gray-400">
+                                    <td class="px-6 py-6 text-center font-bold text-black">
                                         {{ $index + 1 }}
                                     </td>
                                     <td class="px-6 py-6">
-                                        <span class="text-gray-900 font-medium">
+                                        <span class="text-black font-medium">
                                             {{ $question->question_text }}
                                             @if ($question->is_required)
                                                 <span class="text-red-500">*</span>
@@ -85,14 +85,14 @@ $options = $firstLikert
                                             <div class="mt-4 space-y-2">
                                                 @foreach ($question->options->sortBy('order') as $mcOption)
                                                     <label
-                                                        class="flex items-center gap-3 p-3 border border-gray-100 rounded-xl hover:bg-white cursor-pointer group">
+                                                        class="flex items-center gap-3 p-3 border border-black rounded-xl hover:bg-white cursor-pointer group">
                                                         <input type="radio"
                                                             name="answers[{{ $question->id }}][selected_option_id]"
                                                             value="{{ $mcOption->id }}"
-                                                            class="w-5 h-5 text-theme-primary border-gray-300 focus:ring-theme-primary"
+                                                            class="w-5 h-5 text-theme-primary border-black focus:ring-theme-primary"
                                                             {{ $question->is_required ? 'required' : '' }}>
                                                         <span
-                                                            class="text-gray-700 group-hover:text-theme-primary transition-colors">{{ $mcOption->option_text }}</span>
+                                                            class="text-black group-hover:text-theme-primary transition-colors">{{ $mcOption->option_text }}</span>
                                                     </label>
                                                 @endforeach
                                             </div>
@@ -106,7 +106,7 @@ $options = $firstLikert
                                                     class="inline-flex items-center justify-center p-2 cursor-pointer group">
                                                     <input type="radio" name="answers[{{ $question->id }}][likert_value]"
                                                         value="{{ $option->value }}"
-                                                        class="w-6 h-6 text-theme-active border-gray-300 focus:ring-theme-active cursor-pointer"
+                                                        class="w-6 h-6 text-theme-active border-black focus:ring-theme-active cursor-pointer"
                                                         {{ $question->is_required ? 'required' : '' }}>
                                                 </label>
                                             </td>
