@@ -17,6 +17,10 @@ class AccessForRoles
     {
         $user = $request->user();
 
+        // if ($user->role === 'admin') {
+        //     return redirect()->route('dashboard.index');
+        // }
+
         if ($user && $user->role === 'admin') {
             return $next($request);
         }

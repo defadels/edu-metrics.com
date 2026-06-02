@@ -27,7 +27,7 @@
                 </div>
 
                 <!-- User Info -->
-                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+                {{-- <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
                     <div class="flex items-center gap-3">
                         <div class="p-1 bg-gray-100 rounded-lg">
                             <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
@@ -38,7 +38,7 @@
                         <span
                             class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ auth()->user()->name ?? 'Admin' }}</span>
                     </div>
-                </div>
+                </div> --}}
 
                 <nav class="flex-1 py-4 space-y-1 overflow-y-auto">
                     <a href="{{ route('dashboard.index') }}"
@@ -50,7 +50,7 @@
                         <span>Dashboard</span>
                     </a>
 
-                     <a href="{{ route('dashboard.categories.index') }}"
+                    <a href="{{ route('dashboard.categories.index') }}"
                         class="sidebar-item {{ request()->routeIs('dashboard.categories.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -68,7 +68,7 @@
                         <span>Edit Questionnaire</span>
                     </a>
 
-                   
+
 
                     <a href="{{ route('dashboard.respondents.index') }}"
                         class="sidebar-item {{ request()->routeIs('dashboard.respondents.*') ? 'sidebar-item-active' : '' }}">
