@@ -56,7 +56,14 @@ class SurveyController extends Controller
 
     public function update(UpdateSurveyRequest $request, Survey $survey): RedirectResponse
     {
-        $survey->update($request->validated());
+        $survey->title = $request->title;
+        $survey->description = $request->description;
+        $survey->category_id = $request->category_id;
+        $survey->is_active = $request->is_active;
+
+        $survey->is_anonymous = $request->has('is_anonymous') ? 1 : 0;
+
+        $survey->save();
 
         return redirect()->route('dashboard.surveys.index')
             ->with('success', 'Survey updated successfully.');
