@@ -56,6 +56,8 @@ Route::prefix('surveys')->name('surveys.')->group(function () {
 // Protected Routes (Require Authentication)
 Route::middleware('auth')->group(function () {
     // Home Route (Protected)
+
+
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/welcome', function () {
         return redirect()->route('home');
