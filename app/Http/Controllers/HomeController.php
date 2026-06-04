@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Survey;
 use App\Models\SurveyCategory;
 use Illuminate\View\View;
+use Auth;
 
 class HomeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
+    
+        if(Auth::user()->role == 'admin'){
+            return redirect()->route('dashboard.index');
+        }
+
         $activeSurveys = Survey::where('is_active', true)
             ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
