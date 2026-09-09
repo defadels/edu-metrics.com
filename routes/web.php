@@ -76,6 +76,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
         
         Route::get('surveys/{survey}/responses', [SurveyResponseController::class, 'index'])->name('surveys.responses.index');
+        Route::get('surveys/{survey}/responses/export/excel', [SurveyResponseController::class, 'exportExcel'])->name('surveys.responses.export.excel');
+        Route::get('surveys/{survey}/responses/export/pdf', [SurveyResponseController::class, 'exportPdf'])->name('surveys.responses.export.pdf');
         Route::get('surveys/{survey}/responses/{response}', [SurveyResponseController::class, 'show'])->name('surveys.responses.show');
 
         Route::get('likert-scale/{likertScale}/scale-option', [ScaleOptionController::class, 'edit'])->name('scale-option.edit');
