@@ -8,21 +8,30 @@
     {{-- <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpeg') }}"> --}}
     <link rel="icon" type="image/jpeg" href="{{ asset('logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
 
-<body class="bg-[#f3f6f9] dark:bg-gray-900">
-    <div class="min-h-screen flex">
+<body class="bg-[#f3f6f9] font-sans antialiased dark:bg-gray-900">
+    <div x-data="{ sidebarOpen: false, sidebarCollapsed: false }" @keydown.escape.window="sidebarOpen = false"
+        class="min-h-screen flex">
+        <div x-cloak x-show="sidebarOpen" x-transition.opacity @click="sidebarOpen = false"
+            class="fixed inset-0 z-40 bg-gray-950/50 backdrop-blur-sm lg:hidden" aria-hidden="true"></div>
+
         <!-- Sidebar -->
         <aside
-            class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-md z-50">
+            :class="[
+                sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+                sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'
+            ]"
+            class="fixed inset-y-0 left-0 z-50 w-64 transform border-r border-gray-200 bg-white shadow-md transition-all duration-300 dark:border-gray-700 dark:bg-gray-800">
             <div class="flex flex-col h-full">
                 <!-- Sidebar Header -->
-                <div class="flex items-center h-16 bg-theme-primary px-6">
+                <div class="flex h-16 items-center bg-theme-primary px-4">
                     <div class="flex items-center gap-3">
                         {{-- <img src="{{ asset('logo.jpeg') }}" alt="Logo" class="w-8 h-8 object-contain rounded-full bg-yellow-400 p-1"> --}}
                         <img src="{{ asset('logo.png') }}" alt="Logo"
                             class="w-8 h-8 object-contain rounded-full bg-yellow-400 p-1">
-                        <h1 class="text-lg font-bold text-black uppercase tracking-wider">Admin LPM</h1>
+                        <h1 :class="{ 'lg:hidden': sidebarCollapsed }" class="text-lg font-bold text-black uppercase tracking-wider">Admin LPM</h1>
                     </div>
                 </div>
 
@@ -42,79 +51,87 @@
 
                 <nav class="flex-1 py-4 space-y-1 overflow-y-auto">
                     <a href="{{ route('dashboard.index') }}"
+                        aria-label="Dashboard" title="Dashboard"
                         class="sidebar-item {{ request()->routeIs('dashboard.index') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
-                        <span>Dashboard</span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Dashboard</span>
                     </a>
 
                     <a href="{{ route('dashboard.categories.index') }}"
+                        aria-label="Kategori Survei" title="Kategori Survei"
                         class="sidebar-item {{ request()->routeIs('dashboard.categories.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <span>Survey Categories</span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Kategori Survei</span>
                     </a>
 
                     <a href="{{ route('dashboard.surveys.index') }}"
+                        aria-label="Hasil Survei" title="Hasil Survei"
                         class="sidebar-item {{ request()->routeIs('dashboard.surveys.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        <span>Survey Findings </span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Hasil Survei</span>
                     </a>
 
 
 
                     <a href="{{ route('dashboard.respondents.index') }}"
+                        aria-label="Data Responden" title="Data Responden"
                         class="sidebar-item {{ request()->routeIs('dashboard.respondents.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <span>Respondent Data</span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Data Responden</span>
                     </a>
 
                     <a href="{{ route('dashboard.users.index') }}"
+                        aria-label="Data Pengguna" title="Data Pengguna"
                         class="sidebar-item {{ request()->routeIs('dashboard.users.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        <span>Data Pengguna</span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Data Pengguna</span>
                     </a>
 
                     <a href="{{ route('dashboard.likert-scales.index') }}"
+                        aria-label="Skala Likert" title="Skala Likert"
                         class="sidebar-item {{ request()->routeIs('dashboard.likert-scales.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
-                        <span>Likert Scales</span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Skala Likert</span>
                     </a>
 
                     <a href="{{ route('dashboard.questions.index') }}"
+                        aria-label="Kuesioner" title="Kuesioner"
                         class="sidebar-item {{ request()->routeIs('dashboard.questions.*') ? 'sidebar-item-active' : '' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span>Edit Questionnaire</span>
+                        <span :class="{ 'lg:hidden': sidebarCollapsed }">Kuesioner</span>
                     </a>
 
                     <div class="pt-4 mt-4 border-t border-gray-100 dark:border-gray-700">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="w-full sidebar-item text-red-600 hover:bg-red-50">
+                            <button type="submit" aria-label="Keluar" title="Keluar"
+                                class="w-full sidebar-item text-red-600 hover:bg-red-50">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                 </svg>
-                                <span>Keluar</span>
+                                <span :class="{ 'lg:hidden': sidebarCollapsed }">Keluar</span>
                             </button>
                         </form>
                     </div>
@@ -123,12 +140,16 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 pl-64">
+        <div :class="sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'" class="min-w-0 flex-1 transition-all duration-300">
             <!-- Top Bar -->
             <header class="bg-theme-primary text-black shadow-md sticky top-0 z-40 h-16">
-                <div class="px-6 h-full flex items-center justify-between">
+                <div class="flex h-full items-center justify-between px-4 sm:px-6">
                     <div class="flex items-center gap-4">
-                        <button class="p-2 hover:bg-black/10 rounded-lg transition-colors">
+                        <button type="button"
+                            @click="window.innerWidth >= 1024 ? sidebarCollapsed = !sidebarCollapsed : sidebarOpen = !sidebarOpen"
+                            :aria-expanded="(window.innerWidth >= 1024 ? !sidebarCollapsed : sidebarOpen).toString()"
+                            aria-label="Buka atau tutup navigasi"
+                            class="rounded-lg p-2 transition-colors hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-black/30">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 6h16M4 12h16M4 18h16" />
@@ -136,28 +157,24 @@
                         </button>
                     </div>
 
-                    <div class="flex items-center gap-6">
-                        <form method="POST" action="{{ route('logout') }}" class="flex items-center">
-                            @csrf
-                            <button type="submit"
-                                class="flex items-center gap-2 text-sm font-medium hover:text-gray-200 transition-colors">
-                                <span>Keluar</span>
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                            </button>
-                        </form>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden text-right sm:block">
+                            <span class="block text-sm font-bold leading-tight">{{ auth()->user()->name ?? 'Administrator' }}</span>
+                            <span class="block text-xs font-semibold uppercase tracking-wider text-black/60">{{ auth()->user()->role ?? 'admin' }}</span>
+                        </span>
+                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-sm font-black text-[#8B0000] shadow-sm">
+                            {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                        </span>
                     </div>
                 </div>
             </header>
 
             <!-- Content Area -->
-            <main class="p-8">
+            <main class="p-4 sm:p-6 lg:p-8">
                 <!-- Breadcrumbs/Title -->
-                <div class="mb-8 flex items-center justify-between">
-                    <h2 class="text-3xl font-bold text-gray-800">@yield('page-title', 'Dashboard')</h2>
-                    <nav class="flex text-sm text-gray-500 font-medium">
+                <div class="mb-6 flex items-center justify-between lg:mb-8">
+                    <h2 class="text-2xl font-black tracking-tight text-gray-900 dark:text-white sm:text-3xl">@yield('page-title', 'Dashboard')</h2>
+                    <nav class="hidden text-sm font-medium text-gray-500 sm:flex" aria-label="Breadcrumb">
                         <a href="{{ route('dashboard.index') }}" class="text-blue-600 hover:underline">Home</a>
                         <span class="mx-2">/</span>
                         <span class="text-gray-600">@yield('page-title', 'Dashboard')</span>
