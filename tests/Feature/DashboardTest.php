@@ -33,8 +33,14 @@ class DashboardTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSeeText('Dashboard Mutu')
-            ->assertSeeText('Data kepuasan belum tersedia')
+            ->assertSeeText('Quality Dashboard')
+            ->assertSeeText('Satisfaction data is not available yet')
+            ->assertSeeText('Total Surveys')
+            ->assertSeeText('Satisfaction Level Distribution')
+            ->assertSeeText('Insights and Recommendations')
+            ->assertSeeText('Recent Surveys')
+            ->assertDontSeeText('Dashboard Mutu')
+            ->assertDontSeeText('Kelola Survei')
             ->assertViewHas('stats', fn (array $stats) => $stats['surveys'] === 0
                 && $stats['responses'] === 0
                 && $stats['average_satisfaction'] === 0);

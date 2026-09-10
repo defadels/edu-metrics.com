@@ -186,7 +186,7 @@ class DashboardController extends Controller
 
             $satisfactionTrend->push([
                 'key' => $month->format('Y-m'),
-                'label' => $month->locale('id')->translatedFormat('M Y'),
+                'label' => $month->locale('en')->translatedFormat('M Y'),
                 'average' => $monthAnswers->isNotEmpty()
                     ? round((float) $monthAnswers->avg('likert_value'), 2)
                     : null,
@@ -244,11 +244,11 @@ class DashboardController extends Controller
         $position = ($value - $minLikert) / ($maxLikert - $minLikert);
 
         return match (true) {
-            $position >= 0.875 => 'Sangat Puas',
-            $position >= 0.625 => 'Puas',
-            $position >= 0.375 => 'Cukup Puas',
-            $position >= 0.125 => 'Tidak Puas',
-            default => 'Sangat Tidak Puas',
+            $position >= 0.875 => 'Very Satisfied',
+            $position >= 0.625 => 'Satisfied',
+            $position >= 0.375 => 'Moderately Satisfied',
+            $position >= 0.125 => 'Dissatisfied',
+            default => 'Very Dissatisfied',
         };
     }
 
@@ -256,19 +256,19 @@ class DashboardController extends Controller
     {
         if ($average <= 0) {
             return [
-                'title' => 'Data kepuasan belum tersedia',
-                'summary' => 'Belum ada jawaban skala Likert dari respons yang telah selesai.',
-                'recommendation' => 'Pastikan survei aktif memiliki pertanyaan Likert dan mulai kumpulkan respons mahasiswa.',
+                'title' => 'Satisfaction data is not available yet',
+                'summary' => 'There are no Likert-scale answers from completed responses yet.',
+                'recommendation' => 'Ensure active surveys include Likert questions and begin collecting student responses.',
                 'tone' => 'neutral',
             ];
         }
 
         $ratio = $average / $maxLikert;
         $title = match (true) {
-            $ratio >= 0.8 => 'Kepuasan berada pada tingkat sangat baik',
-            $ratio >= 0.7 => 'Kepuasan berada pada tingkat baik',
-            $ratio >= 0.6 => 'Kepuasan cukup, tetapi masih perlu ditingkatkan',
-            default => 'Kepuasan membutuhkan perhatian',
+            $ratio >= 0.8 => 'Satisfaction is at an excellent level',
+            $ratio >= 0.7 => 'Satisfaction is at a good level',
+            $ratio >= 0.6 => 'Satisfaction is moderate but still needs improvement',
+            default => 'Satisfaction needs attention',
         };
         $tone = match (true) {
             $ratio >= 0.8 => 'positive',
@@ -277,18 +277,18 @@ class DashboardController extends Controller
         };
         $recommendation = $lowestIndicator
             ? sprintf(
-                'Prioritaskan perbaikan pada indikator “%s” yang memiliki rata-rata terendah, yaitu %s.',
+                'Prioritize improvements to the “%s” indicator, which has the lowest average score of %s.',
                 $lowestIndicator['question'],
-                number_format($lowestIndicator['average'], 2, ',', '.')
+                number_format($lowestIndicator['average'], 2)
             )
-            : 'Pertahankan pemantauan rutin dan tambahkan pertanyaan Likert agar area perbaikan dapat diidentifikasi.';
+            : 'Continue regular monitoring and add Likert questions so improvement areas can be identified.';
 
         return [
             'title' => $title,
             'summary' => sprintf(
-                'Indeks kepuasan keseluruhan saat ini adalah %s dari %s.',
-                number_format($average, 2, ',', '.'),
-                number_format($maxLikert, 0, ',', '.')
+                'The overall satisfaction index is currently %s out of %s.',
+                number_format($average, 2),
+                number_format($maxLikert)
             ),
             'recommendation' => $recommendation,
             'tone' => $tone,
