@@ -11,6 +11,7 @@ use App\Http\Controllers\SurveyPublicController;
 use App\Http\Controllers\ScaleOptionController;
 use App\Http\Controllers\SurveyResponseController;
 use App\Http\Controllers\RespondentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Middleware\AccessForRoles;
@@ -72,8 +73,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('surveys', SurveyController::class);
         Route::resource('questions', QuestionController::class);
         Route::resource('respondents', RespondentController::class)->only(['index', 'show']);
+        Route::resource('users', UserController::class);
         
         Route::get('surveys/{survey}/responses', [SurveyResponseController::class, 'index'])->name('surveys.responses.index');
+        Route::get('surveys/{survey}/responses/export/excel', [SurveyResponseController::class, 'exportExcel'])->name('surveys.responses.export.excel');
+        Route::get('surveys/{survey}/responses/export/pdf', [SurveyResponseController::class, 'exportPdf'])->name('surveys.responses.export.pdf');
         Route::get('surveys/{survey}/responses/{response}', [SurveyResponseController::class, 'show'])->name('surveys.responses.show');
 
         Route::get('likert-scale/{likertScale}/scale-option', [ScaleOptionController::class, 'edit'])->name('scale-option.edit');

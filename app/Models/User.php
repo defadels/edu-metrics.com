@@ -49,6 +49,35 @@ class User extends Authenticatable
         ];
     }
 
+    public const PROGRAM_STUDIES = [
+        'Agroteknologi',
+        'Akuntansi dan Agribisnis',
+        'Ilmu Pemerintahan',
+        'Ilmu Keperawatan',
+        'Matematika',
+        'Pendidikan Geografi',
+        'Pendidikan Bahasa Inggris',
+        'Pendidikan Bahasa dan Sastra Indonesia',
+        'Pendidikan IPS',
+        'Teknik Informatika',
+        'Sistem Informasi',
+    ];
+
+    public const ROLES = [
+        'admin' => 'Administrator',
+        'mahasiswa' => 'Mahasiswa',
+    ];
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isMahasiswa(): bool
+    {
+        return $this->role === 'mahasiswa';
+    }
+
     public function createdSurveys(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Survey::class, 'created_by');

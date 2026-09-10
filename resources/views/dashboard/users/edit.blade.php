@@ -1,0 +1,186 @@
+@extends('layouts.dashboard')
+
+@section('title', 'Edit Pengguna')
+@section('page-title', 'Edit Pengguna')
+
+@section('content')
+<div class="max-w-3xl animate-fade-in-up" x-data="{ role: '{{ old('role', $user->role) }}' }">
+    <div class="mb-6">
+        <a href="{{ route('dashboard.users.index') }}" 
+           class="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Kembali ke Daftar Pengguna</span>
+        </a>
+    </div>
+
+    <form action="{{ route('dashboard.users.update', $user) }}" method="POST" class="card-modern p-8">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-8 pb-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Edit Data Pengguna: {{ $user->name }}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Perbarui informasi profil, hak akses peran, atau password.</p>
+            </div>
+            <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-base {{ $user->isAdmin() ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' }}">
+                {{ strtoupper(substr($user->name, 0, 2)) }}
+            </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="mb-6">
+            <label class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                Peran Akun (Role) <span class="text-red-500">*</span>
+            </label>
+            @if($user->id === auth()->id())
+                <div class="p-3 mb-2 bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-xl text-xs flex items-center gap-2">
+                    <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Anda sedang mengedit akun Anda sendiri. Role tidak dapat diubah ke non-admin.</span>
+                </div>
+            @endif
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label class="relative flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all"
+                       :class="role === 'mahasiswa' ? 'border-theme-primary bg-emerald-50/40 dark:bg-emerald-950/20 shadow-sm' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'">
+                    <input type="radio" name="role" value="mahasiswa" x-model="role" class="sr-only" {{ $user->id === auth()->id() ? 'disabled' : '' }}>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-900 dark:text-white">Mahasiswa</div>
+                            <div class="text-xs text-gray-500">Responden pengisi kuesioner</div>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="relative flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all"
+                       :class="role === 'admin' ? 'border-theme-active bg-red-50/40 dark:bg-red-950/20 shadow-sm' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'">
+                    <input type="radio" name="role" value="admin" x-model="role" class="sr-only">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-900 dark:text-white">Administrator</div>
+                            <div class="text-xs text-gray-500">Kelola survei dan pengguna</div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+            @error('role')
+                <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Name -->
+            <div class="md:col-span-2">
+                <label for="name" class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                    Nama Lengkap <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required
+                       class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-theme-primary focus:border-theme-primary dark:bg-gray-800 dark:text-white transition-all text-sm">
+                @error('name')
+                    <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Email -->
+            <div class="md:col-span-2">
+                <label for="email" class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                    Alamat Email <span class="text-red-500">*</span>
+                </label>
+                <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required
+                       class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-theme-primary focus:border-theme-primary dark:bg-gray-800 dark:text-white transition-all text-sm">
+                @error('email')
+                    <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- NIM (Nullable) -->
+            <div>
+                <label for="nim" class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                    NIM (Nomor Induk Mahasiswa) <span class="text-xs font-normal text-gray-500 lowercase">(opsional)</span>
+                </label>
+                <input type="text" id="nim" name="nim" value="{{ old('nim', $user->nim) }}"
+                       placeholder="Contoh: 2021001"
+                       class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-theme-primary focus:border-theme-primary dark:bg-gray-800 dark:text-white transition-all text-sm">
+                @error('nim')
+                    <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Program Study (Nullable) -->
+            <div>
+                <label for="program_study" class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                    Program Studi <span class="text-xs font-normal text-gray-500 lowercase">(opsional)</span>
+                </label>
+                <select id="program_study" name="program_study"
+                        class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-theme-primary focus:border-theme-primary dark:bg-gray-800 dark:text-white transition-all text-sm">
+                    <option value="">-- Pilih Program Studi --</option>
+                    @foreach($programStudies as $study)
+                        <option value="{{ $study }}" {{ old('program_study', $user->program_study) === $study ? 'selected' : '' }}>{{ $study }}</option>
+                    @endforeach
+                </select>
+                @error('program_study')
+                    <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
+        <!-- Password Change Section (Optional) -->
+        <div class="pt-6 border-t border-gray-100 dark:border-gray-700 mb-6">
+            <h4 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Ubah Password (Opsional)</h4>
+            <p class="text-xs text-gray-500 mb-4">Biarkan kolom password kosong jika tidak ingin mengubah password saat ini.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- New Password -->
+                <div>
+                    <label for="password" class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                        Password Baru
+                    </label>
+                    <input type="password" id="password" name="password"
+                           placeholder="Kosongkan jika tidak diubah"
+                           class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-theme-primary focus:border-theme-primary dark:bg-gray-800 dark:text-white transition-all text-sm">
+                    @error('password')
+                        <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Confirm New Password -->
+                <div>
+                    <label for="password_confirmation" class="block text-sm font-bold uppercase tracking-tight text-gray-700 dark:text-gray-300 mb-2">
+                        Konfirmasi Password Baru
+                    </label>
+                    <input type="password" id="password_confirmation" name="password_confirmation"
+                           placeholder="Ulangi password baru"
+                           class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-theme-primary focus:border-theme-primary dark:bg-gray-800 dark:text-white transition-all text-sm">
+                    @error('password_confirmation')
+                        <p class="mt-2 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-6 border-t border-gray-100 dark:border-gray-700">
+            <a href="{{ route('dashboard.users.index') }}" 
+               class="px-6 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm">
+                Batal
+            </a>
+            <button type="submit" 
+                    class="btn-modern bg-theme-primary hover:bg-theme-primary/90 text-sm">
+                Perbarui Pengguna
+            </button>
+        </div>
+    </form>
+</div>
+@endsection
