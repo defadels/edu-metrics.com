@@ -28,8 +28,23 @@ Route::get('/clear-cache', function () {
 });
 
 Route::get('/seeder', function (){
-    Artisan::call('db:seed');
+    Artisan::call('db:seed', ['--force' => true]);
     return 'Database seeded!';
+});
+
+Route::get('/seeder/students', function () {
+    Artisan::call('db:seed', [
+        '--class' => 'StudentSeeder',
+        '--force' => true,
+    ]);
+
+    $output = Artisan::output();
+
+    return nl2br($output ?: 'Student database seeded successfully!');
+});
+
+Route::get('/seeder-students', function () {
+    return redirect('/seeder/students');
 });
 
 Route::get('/migrate', function () {

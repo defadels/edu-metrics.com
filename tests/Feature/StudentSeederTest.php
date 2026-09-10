@@ -76,4 +76,12 @@ class StudentSeederTest extends TestCase
 
         $this->assertDatabaseCount('users', 36);
     }
+
+    public function test_it_can_run_student_seeder_via_route(): void
+    {
+        $response = $this->get('/seeder/students');
+
+        $response->assertOk();
+        $this->assertDatabaseCount('users', 36);
+    }
 }
