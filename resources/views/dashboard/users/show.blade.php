@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Detail Pengguna - ' . $user->name)
-@section('page-title', 'Detail Pengguna')
+@section('title', 'User Details - ' . $user->name)
+@section('page-title', 'User Details')
 
 @section('content')
 <div class="space-y-6 animate-fade-in-up">
@@ -12,7 +12,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            <span>Kembali ke Daftar Pengguna</span>
+            <span>Back to User List</span>
         </a>
 
         <div class="flex items-center gap-2">
@@ -21,12 +21,12 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
-                <span>Edit Pengguna</span>
+                <span>Edit User</span>
             </a>
 
             @if($user->id !== auth()->id())
                 <form action="{{ route('dashboard.users.destroy', $user) }}" method="POST" class="inline"
-                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengguna \'{{ addslashes($user->name) }}\'? Tindakan ini tidak dapat dibatalkan.');">
+                      onsubmit="return confirm('Are you sure you want to delete \'{{ addslashes($user->name) }}\'? This action cannot be undone.');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
@@ -34,7 +34,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
-                        <span>Hapus</span>
+                        <span>Delete</span>
                     </button>
                 </form>
             @endif
@@ -64,12 +64,12 @@
                                     <path d="M12 14l9-5-9-5-9 5 9 5z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                                 </svg>
-                                Mahasiswa
+                                Student
                             </span>
                         @endif
 
                         @if($user->id === auth()->id())
-                            <span class="px-2.5 py-0.5 text-xs font-bold rounded bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Akun Anda</span>
+                            <span class="px-2.5 py-0.5 text-xs font-bold rounded bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Your Account</span>
                         @endif
                     </div>
                     <p class="text-gray-500 dark:text-gray-400 text-sm mt-1 flex items-center gap-2">
@@ -88,15 +88,15 @@
                     <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $user->nim ?? '-' }}</p>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Program Studi</span>
+                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Study Program</span>
                     <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $user->program_study ?? '-' }}</p>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Terdaftar Pada</span>
+                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Registered At</span>
                     <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $user->created_at ? $user->created_at->format('d M Y, H:i') : '-' }}</p>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Terakhir Diperbarui</span>
+                    <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Last Updated</span>
                     <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $user->updated_at ? $user->updated_at->format('d M Y, H:i') : '-' }}</p>
                 </div>
             </div>
@@ -108,11 +108,11 @@
         <div class="card-modern overflow-hidden">
             <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
                 <div>
-                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Riwayat Pengisian Kuesioner</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Total {{ $user->completed_responses_count }} survei telah diselesaikan oleh mahasiswa ini.</p>
+                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Questionnaire History</h4>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">This student has completed {{ $user->completed_responses_count }} surveys.</p>
                 </div>
                 <span class="px-3 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 font-bold text-sm rounded-xl">
-                    {{ $user->responses->count() }} Total Partisipasi
+                    {{ $user->responses->count() }} Total Participations
                 </span>
             </div>
 
@@ -120,19 +120,19 @@
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 table-modern">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Survei</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Kategori</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Waktu Mulai</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Waktu Selesai</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Survey</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Started At</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Completed At</th>
                             <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                         @forelse($user->responses as $response)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                                 <td class="px-6 py-4">
-                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $response->survey->title ?? 'Survei Tidak Tersedia' }}</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $response->survey->title ?? 'Survey Unavailable' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="text-xs font-medium px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300">
@@ -148,11 +148,11 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     @if($response->is_completed)
                                         <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                            Selesai
+                                            Completed
                                         </span>
                                     @else
                                         <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300">
-                                            Sedang Dikerjakan
+                                            In Progress
                                         </span>
                                     @endif
                                 </td>
@@ -160,7 +160,7 @@
                                     @if($response->survey_id)
                                         <a href="{{ route('dashboard.surveys.responses.show', [$response->survey_id, $response->id]) }}" 
                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 font-semibold text-xs inline-flex items-center gap-1">
-                                            <span>Lihat Jawaban</span>
+                                            <span>View Answers</span>
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                             </svg>
@@ -173,7 +173,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="px-6 py-8 text-center text-gray-500 text-sm">
-                                    Mahasiswa ini belum pernah mengisi kuesioner.
+                                    This student has not completed any questionnaires yet.
                                 </td>
                             </tr>
                         @endforelse
@@ -185,11 +185,11 @@
         <div class="card-modern overflow-hidden">
             <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
                 <div>
-                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Kuesioner yang Dibuat</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Daftar survei yang dipublikasikan atau dibuat oleh administrator ini.</p>
+                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Created Surveys</h4>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Surveys published or created by this administrator.</p>
                 </div>
                 <span class="px-3 py-1 bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300 font-bold text-sm rounded-xl">
-                    {{ $user->createdSurveys->count() }} Survei
+                    {{ $user->createdSurveys->count() }} Surveys
                 </span>
             </div>
 
@@ -197,12 +197,12 @@
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 table-modern">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Judul Survei</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Kategori</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Periode</th>
-                            <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Responden</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Survey Title</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Period</th>
+                            <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Respondents</th>
                             <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-6 py-3.5 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -217,28 +217,28 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
-                                    {{ $survey->start_date ? $survey->start_date->format('d M Y') : '-' }} s/d {{ $survey->end_date ? $survey->end_date->format('d M Y') : '-' }}
+                                    {{ $survey->start_date ? $survey->start_date->format('d M Y') : '-' }} to {{ $survey->end_date ? $survey->end_date->format('d M Y') : '-' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-                                        {{ $survey->responses_count }} Respon
+                                        {{ $survey->responses_count }} Responses
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     @if($survey->is_active)
                                         <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                            Aktif
+                                            Active
                                         </span>
                                     @else
                                         <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                                            Nonaktif
+                                            Inactive
                                         </span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="{{ route('dashboard.surveys.show', $survey) }}" 
                                        class="text-blue-600 hover:text-blue-900 dark:text-blue-400 font-semibold text-xs inline-flex items-center gap-1">
-                                        <span>Lihat Survei</span>
+                                        <span>View Survey</span>
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                         </svg>
@@ -248,7 +248,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="px-6 py-8 text-center text-gray-500 text-sm">
-                                    Administrator ini belum membuat kuesioner.
+                                    This administrator has not created any surveys yet.
                                 </td>
                             </tr>
                         @endforelse

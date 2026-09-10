@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Data Responden')
-@section('page-title', 'Data Responden')
+@section('title', 'Respondent Data')
+@section('page-title', 'Respondent Data')
 
 @section('content')
     <div class="mb-6 flex justify-between items-center animate-fade-in-up">
         <div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Daftar Responden</h3>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">Kelola data peserta kuesioner</p>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Respondent List</h3>
+            <p class="text-gray-600 dark:text-gray-400 mt-1">View questionnaire participants and their completion activity</p>
         </div>
     </div>
 
@@ -18,25 +18,25 @@
                     <tr>
                         <th
                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider w-16">
-                            No</th>
+                            No.</th>
                         <th
                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                             NIM</th>
                         <th
                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            Prodi</th>
+                            Study Program</th>
                         <th
                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            Nama Lengkap</th>
+                            Full Name</th>
                         <th
                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                             Email</th>
                         <th
                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider text-center">
-                            Total Kuesioner Selesai</th>
+                            Completed Questionnaires</th>
                         <th
                             class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            Aksi</th>
+                            Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -63,12 +63,12 @@
                                 @if ($respondent->responses_count > 0)
                                     <span
                                         class="px-3 py-1 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                        {{ $respondent->responses_count }} Kuesioner
+                                        {{ $respondent->responses_count }} Questionnaires
                                     </span>
                                 @else
                                     <span
                                         class="px-3 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                                        Belum mengisi
+                                        No submissions yet
                                     </span>
                                 @endif
                             </td>
@@ -81,13 +81,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
-                                    Detail Profil
+                                    View Profile
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center">
+                            <td colspan="7" class="px-6 py-12 text-center">
                                 <div
                                     class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
                                     <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor"
@@ -96,10 +96,10 @@
                                             d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                     </svg>
                                 </div>
-                                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Tidak ada data responden
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">No respondent data
                                 </h3>
-                                <p class="text-gray-500 dark:text-gray-400">Belum ada peserta yang terdaftar di dalam
-                                    sistem.</p>
+                                <p class="text-gray-500 dark:text-gray-400">No participants are registered in the
+                                    system yet.</p>
                             </td>
                         </tr>
                     @endforelse

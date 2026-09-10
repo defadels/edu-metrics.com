@@ -24,8 +24,8 @@ class UserController extends Controller
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('nim', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
             });
         }
 
@@ -51,11 +51,11 @@ class UserController extends Controller
             'responses as completed_responses_count' => function ($q) {
                 $q->where('is_completed', true);
             },
-            'createdSurveys'
+            'createdSurveys',
         ])
-        ->latest()
-        ->paginate(15)
-        ->withQueryString();
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
 
         $programStudies = User::PROGRAM_STUDIES;
         $roles = User::ROLES;
@@ -87,14 +87,14 @@ class UserController extends Controller
             'program_study' => ['nullable', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Password::defaults()],
         ], [
-            'name.required' => 'Nama lengkap wajib diisi.',
-            'email.required' => 'Alamat email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Email sudah terdaftar dalam sistem.',
-            'role.required' => 'Role wajib dipilih.',
-            'nim.unique' => 'NIM sudah digunakan oleh pengguna lain.',
-            'password.required' => 'Password wajib diisi.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'name.required' => 'Full name is required.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'The email format is invalid.',
+            'email.unique' => 'This email is already registered.',
+            'role.required' => 'An account role must be selected.',
+            'nim.unique' => 'This NIM is already used by another user.',
+            'password.required' => 'Password is required.',
+            'password.confirmed' => 'The password confirmation does not match.',
         ]);
 
         User::create([
@@ -108,7 +108,7 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('dashboard.users.index')
-            ->with('success', 'Pengguna baru berhasil ditambahkan.');
+            ->with('success', 'The new user was added successfully.');
     }
 
     /**
@@ -120,20 +120,20 @@ class UserController extends Controller
             'responses as completed_responses_count' => function ($q) {
                 $q->where('is_completed', true);
             },
-            'createdSurveys'
+            'createdSurveys',
         ]);
 
         if ($user->isMahasiswa()) {
             $user->load([
                 'responses' => function ($query) {
                     $query->with('survey.category')->latest('created_at');
-                }
+                },
             ]);
         } elseif ($user->isAdmin()) {
             $user->load([
                 'createdSurveys' => function ($query) {
                     $query->with('category')->withCount('responses')->latest();
-                }
+                },
             ]);
         }
 
@@ -164,30 +164,30 @@ class UserController extends Controller
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique('users', 'email')->ignore($user->id)
+                Rule::unique('users', 'email')->ignore($user->id),
             ],
             'role' => ['required', 'in:admin,mahasiswa'],
             'nim' => [
                 'nullable',
                 'string',
                 'max:50',
-                Rule::unique('users', 'nim')->ignore($user->id)
+                Rule::unique('users', 'nim')->ignore($user->id),
             ],
             'program_study' => ['nullable', 'string', 'max:255'],
             'password' => ['nullable', 'confirmed', Password::defaults()],
         ], [
-            'name.required' => 'Nama lengkap wajib diisi.',
-            'email.required' => 'Alamat email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Email sudah terdaftar.',
-            'role.required' => 'Role wajib dipilih.',
-            'nim.unique' => 'NIM sudah digunakan oleh pengguna lain.',
-            'password.confirmed' => 'Konfirmasi password baru tidak cocok.',
+            'name.required' => 'Full name is required.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'The email format is invalid.',
+            'email.unique' => 'This email is already registered.',
+            'role.required' => 'An account role must be selected.',
+            'nim.unique' => 'This NIM is already used by another user.',
+            'password.confirmed' => 'The new password confirmation does not match.',
         ]);
 
         // Prevent admin from demoting self
         if ($user->id === auth()->id() && $request->role !== 'admin') {
-            return back()->withInput()->with('error', 'Anda tidak dapat mengubah role akun Anda sendiri yang sedang aktif.');
+            return back()->withInput()->with('error', 'You cannot change the role of your own active account to a non-administrator role.');
         }
 
         $data = [
@@ -205,7 +205,7 @@ class UserController extends Controller
         $user->update($data);
 
         return redirect()->route('dashboard.users.index')
-            ->with('success', "Data pengguna '{$user->name}' berhasil diperbarui.");
+            ->with('success', "User '{$user->name}' was updated successfully.");
     }
 
     /**
@@ -215,18 +215,18 @@ class UserController extends Controller
     {
         // Prevent self-deletion
         if ($user->id === auth()->id()) {
-            return back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+            return back()->with('error', 'You cannot delete your own account.');
         }
 
         // Prevent deleting the last administrator
         if ($user->isAdmin() && User::where('role', 'admin')->count() <= 1) {
-            return back()->with('error', 'Tidak dapat menghapus administrator terakhir dalam sistem.');
+            return back()->with('error', 'The last administrator in the system cannot be deleted.');
         }
 
         $userName = $user->name;
         $user->delete();
 
         return redirect()->route('dashboard.users.index')
-            ->with('success', "Pengguna '{$userName}' berhasil dihapus.");
+            ->with('success', "User '{$userName}' was deleted successfully.");
     }
 }
