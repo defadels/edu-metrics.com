@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Detail Responden')
-@section('page-title', 'Detail Profil Responden')
+@section('title', 'Respondent Details')
+@section('page-title', 'Respondent Details')
 
 @section('content')
     <div class="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4 animate-fade-in-up">
         <div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Profil: {{ $respondent->name }}</h3>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">Melihat informasi profil dan riwayat kuesioner</p>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Profile: {{ $respondent->name }}</h3>
+            <p class="text-gray-600 dark:text-gray-400 mt-1">View profile information and questionnaire history</p>
         </div>
         <div class="flex gap-2">
             <a href="{{ route('dashboard.respondents.index') }}"
@@ -15,13 +15,13 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span>Kembali ke Daftar</span>
+                <span>Back to Respondent List</span>
             </a>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <!-- Profil Info -->
+        <!-- Profile Information -->
         <div class="lg:col-span-1">
             <div class="card-modern h-full">
                 <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
@@ -34,32 +34,31 @@
                 </div>
 
                 <div class="p-6">
-                    <h5 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4">Informasi
-                        Tambahan</h5>
+                    <h5 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4">Additional Information</h5>
                     <dl class="space-y-4">
                         <div>
-                            <dt class="text-sm text-gray-500 dark:text-gray-400">NIM / Nomor Induk</dt>
+                            <dt class="text-sm text-gray-500 dark:text-gray-400">NIM / Student ID</dt>
                             <dd class="text-sm font-semibold text-gray-900 dark:text-white mt-1">
-                                {{ $respondent->nim ?? 'Tidak ada data' }}</dd>
+                                {{ $respondent->nim ?? 'Not available' }}</dd>
                         </div>
 
                         <div>
-                            <dt class="text-sm text-gray-500 dark:text-gray-400">Program Studi</dt>
+                            <dt class="text-sm text-gray-500 dark:text-gray-400">Study Program</dt>
                             <dd class="text-sm font-semibold text-gray-900 dark:text-white mt-1">
-                                {{ $respondent->program_study ?? 'Tidak ada data' }}</dd>
+                                {{ $respondent->program_study ?? 'Not available' }}</dd>
                         </div>
 
                         <div>
-                            <dt class="text-sm text-gray-500 dark:text-gray-400">Tanggal Mendaftar</dt>
+                            <dt class="text-sm text-gray-500 dark:text-gray-400">Registration Date</dt>
                             <dd class="text-sm font-semibold text-gray-900 dark:text-white mt-1">
                                 {{ $respondent->created_at->format('d M Y, H:i') }}</dd>
                         </div>
                         <div>
-                            <dt class="text-sm text-gray-500 dark:text-gray-400">Total Kuesioner Selesai</dt>
+                            <dt class="text-sm text-gray-500 dark:text-gray-400">Completed Questionnaires</dt>
                             <dd class="mt-2">
                                 <span
                                     class="px-3 py-1 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                    {{ $respondent->responses->count() }} Kuesioner
+                                    {{ $respondent->responses->count() }} Questionnaires
                                 </span>
                             </dd>
                         </div>
@@ -68,12 +67,12 @@
             </div>
         </div>
 
-        <!-- Riwayat Survey -->
+        <!-- Survey History -->
         <div class="lg:col-span-2">
             <div class="card-modern h-full">
                 <div class="p-6 border-b border-gray-100 dark:border-gray-700">
-                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Riwayat Pengisian Kuesioner</h4>
-                    <p class="text-gray-500 text-sm mt-1">Daftar kuesioner yang telah diselesaikan oleh responden ini.</p>
+                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Questionnaire History</h4>
+                    <p class="text-gray-500 text-sm mt-1">Questionnaires completed by this respondent.</p>
                 </div>
 
                 <div class="p-0">
@@ -84,16 +83,16 @@
                                     <tr>
                                         <th
                                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                                            Judul Kuesioner</th>
+                                            Questionnaire</th>
                                         <th
                                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                                            Kategori</th>
+                                            Category</th>
                                         <th
                                             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                                            Tanggal Selesai</th>
+                                            Completed At</th>
                                         <th
                                             class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                                            Aksi</th>
+                                            Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -125,7 +124,7 @@
                                                             stroke-width="2"
                                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                     </svg>
-                                                    Lihat Jawaban
+                                                    View Answers
                                                 </a>
                                             </td>
                                         </tr>
@@ -142,9 +141,9 @@
                                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </div>
-                            <h5 class="text-base font-bold text-gray-900 dark:text-white mb-1">Belum ada aktivitas</h5>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm">Responden ini belum pernah menyelesaikan
-                                kuesioner apapun.</p>
+                            <h5 class="text-base font-bold text-gray-900 dark:text-white mb-1">No activity yet</h5>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">This respondent has not completed any
+                                questionnaires yet.</p>
                         </div>
                     @endif
                 </div>

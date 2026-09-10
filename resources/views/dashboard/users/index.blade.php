@@ -1,22 +1,22 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Data Pengguna')
-@section('page-title', 'Data Pengguna')
+@section('title', 'User Management')
+@section('page-title', 'User Management')
 
 @section('content')
 <div class="space-y-6 animate-fade-in-up">
     <!-- Header Section -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Manajemen Pengguna</h3>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">Kelola data administrator dan mahasiswa dalam sistem</p>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">User Management</h3>
+            <p class="text-gray-600 dark:text-gray-400 mt-1">Manage administrator and student accounts</p>
         </div>
         <a href="{{ route('dashboard.users.create') }}" 
            class="btn-modern bg-theme-active hover:bg-theme-active/90 inline-flex items-center justify-center gap-2 self-start sm:self-auto">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            <span>Tambah Pengguna</span>
+            <span>Add User</span>
         </a>
     </div>
 
@@ -25,9 +25,9 @@
         <!-- Total Users -->
         <div class="metric-card bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
             <div>
-                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Total Pengguna</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Total Users</p>
                 <h4 class="text-2xl font-extrabold text-gray-900 dark:text-white mt-1">{{ number_format($stats['total_users']) }}</h4>
-                <p class="text-xs text-gray-500 mt-1">Semua akun terdaftar</p>
+                <p class="text-xs text-gray-500 mt-1">All registered accounts</p>
             </div>
             <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,7 +41,7 @@
             <div>
                 <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Administrator</p>
                 <h4 class="text-2xl font-extrabold text-red-600 dark:text-red-400 mt-1">{{ number_format($stats['total_admins']) }}</h4>
-                <p class="text-xs text-gray-500 mt-1">Hak akses penuh</p>
+                <p class="text-xs text-gray-500 mt-1">Full system access</p>
             </div>
             <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,12 +50,12 @@
             </div>
         </div>
 
-        <!-- Total Mahasiswa -->
+        <!-- Total Students -->
         <div class="metric-card bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
             <div>
-                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Mahasiswa</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Students</p>
                 <h4 class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">{{ number_format($stats['total_mahasiswa']) }}</h4>
-                <p class="text-xs text-gray-500 mt-1">Responden survei</p>
+                <p class="text-xs text-gray-500 mt-1">Survey respondents</p>
             </div>
             <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,9 +69,9 @@
         <!-- Total Completed Responses -->
         <div class="metric-card bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
             <div>
-                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Total Respon Survei</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Total Survey Responses</p>
                 <h4 class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">{{ number_format($stats['total_responses']) }}</h4>
-                <p class="text-xs text-gray-500 mt-1">Kuesioner selesai</p>
+                <p class="text-xs text-gray-500 mt-1">Completed questionnaires</p>
             </div>
             <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@
         <form method="GET" action="{{ route('dashboard.users.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 items-end">
             <!-- Search Keyword -->
             <div class="lg:col-span-4">
-                <label for="search" class="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-1.5">Pencarian</label>
+                <label for="search" class="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-1.5">Search</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@
                         </svg>
                     </span>
                     <input type="text" name="search" id="search" value="{{ request('search') }}"
-                           placeholder="Cari nama, email, atau NIM..."
+                           placeholder="Search by name, email, or NIM..."
                            class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-200 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary transition-all">
                 </div>
             </div>
@@ -104,19 +104,19 @@
                 <label for="role" class="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-1.5">Role</label>
                 <select name="role" id="role"
                         class="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-200 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary transition-all">
-                    <option value="">Semua Role</option>
+                    <option value="">All Roles</option>
                     @foreach($roles as $key => $label)
-                        <option value="{{ $key }}" {{ request('role') === $key ? 'selected' : '' }}>{{ $label }}</option>
+                        <option value="{{ $key }}" {{ request('role') === $key ? 'selected' : '' }}>{{ $key === 'mahasiswa' ? 'Student' : $label }}</option>
                     @endforeach
                 </select>
             </div>
 
             <!-- Program Study Filter -->
             <div class="lg:col-span-3">
-                <label for="program_study" class="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-1.5">Program Studi</label>
+                <label for="program_study" class="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-1.5">Study Program</label>
                 <select name="program_study" id="program_study"
                         class="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-200 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary transition-all">
-                    <option value="">Semua Program Studi</option>
+                    <option value="">All Study Programs</option>
                     @foreach($programStudies as $study)
                         <option value="{{ $study }}" {{ request('program_study') === $study ? 'selected' : '' }}>{{ $study }}</option>
                     @endforeach
@@ -151,14 +151,14 @@
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 table-modern">
                 <thead>
                     <tr>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider w-12">No</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Pengguna</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider w-12">No.</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">User</th>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Role</th>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">NIM</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Program Studi</th>
-                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aktivitas</th>
-                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Terdaftar</th>
-                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Study Program</th>
+                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Activity</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Registered</th>
+                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -176,7 +176,7 @@
                                         <div class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                                             <span>{{ $user->name }}</span>
                                             @if($user->id === auth()->id())
-                                                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Anda</span>
+                                                <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">You</span>
                                             @endif
                                         </div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</div>
@@ -197,7 +197,7 @@
                                             <path d="M12 14l9-5-9-5-9 5 9 5z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                                         </svg>
-                                        Mahasiswa
+                                        Student
                                     </span>
                                 @endif
                             </td>
@@ -209,17 +209,17 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 @if($user->isAdmin())
-                                    <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300" title="Survei yang dibuat">
-                                        {{ $user->created_surveys_count }} Survei Dibuat
+                                    <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300" title="Surveys created">
+                                        {{ $user->created_surveys_count }} Surveys Created
                                     </span>
                                 @else
                                     @if($user->completed_responses_count > 0)
                                         <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                            {{ $user->completed_responses_count }} Kuesioner Diisi
+                                            {{ $user->completed_responses_count }} Questionnaires Completed
                                         </span>
                                     @else
                                         <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                                            Belum mengisi
+                                            No submissions yet
                                         </span>
                                     @endif
                                 @endif
@@ -230,7 +230,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                 <div class="inline-flex items-center gap-2">
                                     <a href="{{ route('dashboard.users.show', $user) }}" 
-                                       title="Lihat Detail"
+                                       title="View Details"
                                        class="p-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -239,7 +239,7 @@
                                     </a>
 
                                     <a href="{{ route('dashboard.users.edit', $user) }}" 
-                                       title="Edit Pengguna"
+                                       title="Edit User"
                                        class="p-1.5 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -248,11 +248,11 @@
 
                                     @if($user->id !== auth()->id())
                                         <form action="{{ route('dashboard.users.destroy', $user) }}" method="POST" class="inline"
-                                              onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengguna \'{{ addslashes($user->name) }}\'? Tindakan ini tidak dapat dibatalkan.');">
+                                              onsubmit="return confirm('Are you sure you want to delete \'{{ addslashes($user->name) }}\'? This action cannot be undone.');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
-                                                    title="Hapus Pengguna"
+                                                    title="Delete User"
                                                     class="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -271,8 +271,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                 </div>
-                                <h4 class="text-base font-bold text-gray-900 dark:text-white">Tidak ada data pengguna</h4>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Coba sesuaikan kata kunci pencarian atau filter yang Anda pilih.</p>
+                                <h4 class="text-base font-bold text-gray-900 dark:text-white">No users found</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Try adjusting your search term or selected filters.</p>
                             </td>
                         </tr>
                     @endforelse
