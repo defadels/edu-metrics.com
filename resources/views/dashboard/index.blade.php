@@ -88,9 +88,9 @@
             <article class="rounded-2xl border border-gray-200 border-l-4 border-l-rose-500 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 dark:border-gray-700 dark:bg-gray-800">
                 <div class="flex items-start justify-between gap-4">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Saran Mahasiswa</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Student Feedback</p>
                         <p class="mt-2 text-3xl font-black tracking-tight text-gray-950 dark:text-white">{{ number_format($stats['total_suggestions']) }}</p>
-                        <p class="mt-1 text-sm font-medium text-rose-700 dark:text-rose-300">Aspirasi tertulis</p>
+                        <p class="mt-1 text-sm font-medium text-rose-700 dark:text-rose-300">Written suggestions</p>
                     </div>
                     <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-950/50 dark:text-rose-300">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -361,13 +361,13 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                             <span class="relative inline-flex h-2 w-2 rounded-full bg-rose-500"></span>
                         </span>
-                        <span>SUARA & MASUKAN MAHASISWA</span>
+                        <span>STUDENT VOICE & SUGGESTIONS</span>
                     </div>
                     <h3 class="mt-2 text-xl font-black tracking-tight text-gray-950 dark:text-white sm:text-2xl">
-                        Kotak Saran & Aspirasi Responden
+                        Student Feedback & Suggestions
                     </h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        Masukan kualitatif, kritik membangun, dan rekomendasi layanan dari input pertanyaan terbuka kuesioner.
+                        Qualitative feedback, constructive input, and service recommendations collected from open-ended survey questions.
                     </p>
                 </div>
 
@@ -377,7 +377,7 @@
                         <svg class="h-4 w-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                         </svg>
-                        <span x-text="filteredItems.length + ' Masukan'"></span>
+                        <span x-text="filteredItems.length + ' Suggestions'"></span>
                     </span>
 
                     <div class="flex items-center rounded-xl bg-gray-100 p-1 dark:bg-gray-700/60">
@@ -386,24 +386,24 @@
                             @click="viewMode = 'grid'"
                             :class="viewMode === 'grid' ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-850 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'"
                             class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all duration-200"
-                            title="Tampilan Grid Kartu"
+                            title="Card Grid View"
                         >
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                             </svg>
-                            <span class="hidden sm:inline">Grid Kartu</span>
+                            <span class="hidden sm:inline">Card Grid</span>
                         </button>
                         <button
                             type="button"
                             @click="viewMode = 'carousel'"
                             :class="viewMode === 'carousel' ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-850 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'"
                             class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all duration-200"
-                            title="Tampilan Slider Interaktif"
+                            title="Focus Slider View"
                         >
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                             </svg>
-                            <span class="hidden sm:inline">Slider Fokus</span>
+                            <span class="hidden sm:inline">Focus Slider</span>
                         </button>
                     </div>
                 </div>
@@ -420,7 +420,7 @@
                             :class="selectedSurvey === 'all' ? 'bg-rose-600 text-white shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700/70 dark:text-gray-300 dark:hover:bg-gray-700'"
                             class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all duration-200"
                         >
-                            <span>Semua Survei</span>
+                            <span>All Surveys</span>
                             <span class="rounded-full bg-white/20 px-1.5 py-0.2 text-[10px]" x-text="items.length"></span>
                         </button>
 
@@ -447,7 +447,7 @@
                         <input
                             type="text"
                             x-model="searchQuery"
-                            placeholder="Cari saran, mahasiswa, prodi..."
+                            placeholder="Search suggestions, students, programs..."
                             class="w-full rounded-xl border border-gray-200 bg-white py-1.5 pl-9 pr-8 text-xs font-medium text-gray-800 placeholder-gray-400 shadow-sm focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-200 dark:placeholder-gray-500"
                         />
                         <button
@@ -490,12 +490,12 @@
                                                 <h4 class="truncate text-sm font-extrabold text-gray-900 dark:text-white" x-text="item.respondent_name"></h4>
                                                 <template x-if="!item.is_anonymous">
                                                     <span class="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-950/40 dark:text-emerald-300">
-                                                        Mahasiswa
+                                                        Student
                                                     </span>
                                                 </template>
                                                 <template x-if="item.is_anonymous">
                                                     <span class="inline-flex shrink-0 items-center rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-                                                        Anonim
+                                                        Anonymous
                                                     </span>
                                                 </template>
                                             </div>
@@ -535,7 +535,7 @@
                                                 @click="expandedId = (expandedId === item.id ? null : item.id)"
                                                 class="mt-2 inline-flex items-center text-xs font-bold text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300"
                                             >
-                                                <span x-text="expandedId === item.id ? 'Sembunyikan' : 'Baca Selengkapnya'"></span>
+                                                <span x-text="expandedId === item.id ? 'Show Less' : 'Read More'"></span>
                                                 <svg class="ml-1 h-3.5 w-3.5 transition-transform" :class="expandedId === item.id ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                                 </svg>
@@ -553,14 +553,14 @@
                                             type="button"
                                             @click="copyText(item.text_value, item.id)"
                                             class="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-gray-500 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200 transition-colors"
-                                            title="Salin isi saran"
+                                            title="Copy suggestion text"
                                         >
                                             <template x-if="copiedId === item.id">
                                                 <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
                                                     <svg class="h-3.5 w-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                                     </svg>
-                                                    <span>Tersalin</span>
+                                                    <span>Copied</span>
                                                 </span>
                                             </template>
                                             <template x-if="copiedId !== item.id">
@@ -568,7 +568,7 @@
                                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                                                     </svg>
-                                                    <span>Salin</span>
+                                                    <span>Copy</span>
                                                 </span>
                                             </template>
                                         </button>
@@ -576,7 +576,7 @@
                                         <a
                                             :href="'{{ url('dashboard/surveys') }}/' + item.survey_id + '/responses/' + item.response_id"
                                             class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/50 transition-colors"
-                                            title="Buka detail respon"
+                                            title="View response details"
                                         >
                                             <span>Detail</span>
                                             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -611,7 +611,7 @@
                         <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center">
                             {{-- Carousel Navigation Top indicator --}}
                             <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-rose-100/80 px-3 py-1 text-xs font-bold text-rose-800 dark:bg-rose-950/80 dark:text-rose-300">
-                                <span x-text="'Masukan #' + (carouselIndex + 1) + ' dari ' + filteredItems.length"></span>
+                                <span x-text="'Feedback #' + (carouselIndex + 1) + ' of ' + filteredItems.length"></span>
                             </div>
 
                             {{-- Active Slide Item --}}
@@ -625,8 +625,8 @@
 
                                         {{-- Survey Context --}}
                                         <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-gray-500 dark:text-gray-400">
-                                            <span class="rounded-lg bg-gray-100 px-3 py-1 dark:bg-gray-800 dark:text-gray-300" x-text="'Survei: ' + item.survey_title"></span>
-                                            <span class="rounded-lg bg-rose-50 px-3 py-1 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300" x-text="'Pertanyaan: ' + item.question_text"></span>
+                                            <span class="rounded-lg bg-gray-100 px-3 py-1 dark:bg-gray-800 dark:text-gray-300" x-text="'Survey: ' + item.survey_title"></span>
+                                            <span class="rounded-lg bg-rose-50 px-3 py-1 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300" x-text="'Question: ' + item.question_text"></span>
                                         </div>
 
                                         {{-- Respondent Profile --}}
@@ -638,7 +638,7 @@
                                             ></div>
                                             <h4 class="text-base font-extrabold text-gray-950 dark:text-white" x-text="item.respondent_name"></h4>
                                             <p class="text-xs text-gray-500 dark:text-gray-400">
-                                                <span x-text="item.program_study || 'Mahasiswa UNIBBA'"></span>
+                                                <span x-text="item.program_study || 'University Student'"></span>
                                                 <template x-if="item.nim">
                                                     <span x-text="' • ' + item.nim"></span>
                                                 </template>
@@ -655,7 +655,7 @@
                                     type="button"
                                     @click="prevSlide()"
                                     class="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-gray-700 shadow-md ring-1 ring-black/5 hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-750"
-                                    title="Saran Sebelumnya"
+                                    title="Previous Suggestion"
                                 >
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -678,7 +678,7 @@
                                     type="button"
                                     @click="nextSlide()"
                                     class="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-gray-700 shadow-md ring-1 ring-black/5 hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-750"
-                                    title="Saran Selanjutnya"
+                                    title="Next Suggestion"
                                 >
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -701,25 +701,25 @@
 
                     <template x-if="items.length > 0 && searchQuery">
                         <div>
-                            <h4 class="text-base font-extrabold text-gray-900 dark:text-white">Tidak ada saran yang cocok</h4>
+                            <h4 class="text-base font-extrabold text-gray-900 dark:text-white">No matching suggestions found</h4>
                             <p class="mt-1 max-w-md text-xs text-gray-500 dark:text-gray-400">
-                                Tidak ditemukan saran mahasiswa dengan kata kunci "<span class="font-bold text-gray-700 dark:text-gray-300" x-text="searchQuery"></span>".
+                                No student feedback found matching keyword "<span class="font-bold text-gray-700 dark:text-gray-300" x-text="searchQuery"></span>".
                             </p>
                             <button
                                 type="button"
                                 @click="searchQuery = ''; selectedSurvey = 'all'"
                                 class="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-gray-100 px-4 py-2 text-xs font-bold text-gray-800 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 transition-all"
                             >
-                                <span>Reset Filter Pencarian</span>
+                                <span>Reset Search Filter</span>
                             </button>
                         </div>
                     </template>
 
                     <template x-if="items.length === 0">
                         <div>
-                            <h4 class="text-base font-extrabold text-gray-900 dark:text-white">Belum Ada Masukan Saran Mahasiswa</h4>
+                            <h4 class="text-base font-extrabold text-gray-900 dark:text-white">No Student Feedback Yet</h4>
                             <p class="mt-1.5 max-w-md text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-                                Masukan tertulis akan otomatis tampil di sini ketika admin menambahkan pertanyaan tipe <strong>Teks</strong> pada kuesioner dan mahasiswa mengisi saran/masukannya.
+                                Written suggestions will appear here automatically when administrators create <strong>Text</strong> questions in surveys and students submit their answers.
                             </p>
                             <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
                                 <a
@@ -729,13 +729,13 @@
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                     </svg>
-                                    <span>Buat Pertanyaan Saran di Survei</span>
+                                    <span>Create Text Question in Survey</span>
                                 </a>
                                 <a
                                     href="{{ route('dashboard.surveys.index') }}"
                                     class="inline-flex items-center gap-2 rounded-xl bg-gray-100 px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition-all"
                                 >
-                                    <span>Kelola Survei</span>
+                                    <span>Manage Surveys</span>
                                 </a>
                             </div>
                         </div>

@@ -251,8 +251,8 @@ class DashboardController extends Controller
             $isAnon = (bool) ($survey?->is_anonymous ?? false);
 
             $respondentName = $isAnon
-                ? 'Responden Anonim'
-                : ($user?->name ?? $answer->response?->respondent_name ?? 'Mahasiswa');
+                ? 'Anonymous Respondent'
+                : ($user?->name ?? $answer->response?->respondent_name ?? 'Student');
 
             $nim = ($isAnon || ! $user?->nim) ? null : $user->nim;
             $programStudy = ($isAnon || ! $user?->program_study) ? null : $user->program_study;
@@ -268,15 +268,15 @@ class DashboardController extends Controller
                 'id' => $answer->id,
                 'response_id' => $answer->response_id,
                 'survey_id' => $survey?->id,
-                'survey_title' => $survey?->title ?? 'Survei Evaluasi',
-                'category_name' => $survey?->category?->name ?? 'Layanan',
-                'question_text' => $answer->question?->question_text ?? 'Saran & Masukan',
+                'survey_title' => $survey?->title ?? 'Evaluation Survey',
+                'category_name' => $survey?->category?->name ?? 'Services',
+                'question_text' => $answer->question?->question_text ?? 'Suggestions & Feedback',
                 'text_value' => trim($answer->text_value),
                 'respondent_name' => $respondentName,
                 'nim' => $nim,
                 'program_study' => $programStudy,
                 'is_anonymous' => $isAnon,
-                'avatar_initials' => strtoupper($initials ?: 'M'),
+                'avatar_initials' => strtoupper($initials ?: 'S'),
                 'avatar_gradient' => $avatarGradients[$index % count($avatarGradients)],
                 'submitted_at' => $completedAt->format('d M Y, H:i'),
                 'time_ago' => $completedAt->diffForHumans(),
