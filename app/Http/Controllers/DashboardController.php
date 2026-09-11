@@ -221,6 +221,81 @@ class DashboardController extends Controller
 
         $insight = $this->buildInsight($averageSatisfaction, $maxLikert, $lowestIndicators->first());
 
+        $textAnswers = Answer::query()
+            ->with([
+                'question:id,survey_id,question_text,order',
+                'question.survey:id,title,category_id,is_anonymous',
+                'question.survey.category:id,name',
+                'response:id,survey_id,user_id,respondent_name,completed_at,created_at',
+                'response.user:id,name,nim,role,program_study',
+            ])
+            ->whereNotNull('text_value')
+            ->where('text_value', '!=', '')
+            ->whereHas('response', fn ($query) => $query->where('is_completed', true))
+            ->whereHas('question', fn ($query) => $query->where('question_type', 'text'))
+            ->latest('id')
+            ->get();
+
+        $avatarGradients = [
+            'from-blue-600 to-indigo-600',
+            'from-emerald-500 to-teal-600',
+            'from-purple-600 to-pink-600',
+            'from-amber-500 to-orange-600',
+            'from-rose-500 to-red-600',
+            'from-cyan-500 to-blue-600',
+        ];
+
+        $studentSuggestions = $textAnswers->map(function ($answer, $index) use ($avatarGradients) {
+            $user = $answer->response?->user;
+            $survey = $answer->question?->survey;
+            $isAnon = (bool) ($survey?->is_anonymous ?? false);
+
+            $respondentName = $isAnon
+                ? 'Responden Anonim'
+                : ($user?->name ?? $answer->response?->respondent_name ?? 'Mahasiswa');
+
+            $nim = ($isAnon || ! $user?->nim) ? null : $user->nim;
+            $programStudy = ($isAnon || ! $user?->program_study) ? null : $user->program_study;
+
+            $words = preg_split('/\s+/', trim($respondentName));
+            $initials = count($words) >= 2
+                ? mb_substr($words[0], 0, 1) . mb_substr($words[1], 0, 1)
+                : mb_substr($respondentName, 0, 2);
+
+            $completedAt = $answer->response?->completed_at ?? $answer->created_at ?? now();
+
+            return [
+                'id' => $answer->id,
+                'response_id' => $answer->response_id,
+                'survey_id' => $survey?->id,
+                'survey_title' => $survey?->title ?? 'Survei Evaluasi',
+                'category_name' => $survey?->category?->name ?? 'Layanan',
+                'question_text' => $answer->question?->question_text ?? 'Saran & Masukan',
+                'text_value' => trim($answer->text_value),
+                'respondent_name' => $respondentName,
+                'nim' => $nim,
+                'program_study' => $programStudy,
+                'is_anonymous' => $isAnon,
+                'avatar_initials' => strtoupper($initials ?: 'M'),
+                'avatar_gradient' => $avatarGradients[$index % count($avatarGradients)],
+                'submitted_at' => $completedAt->format('d M Y, H:i'),
+                'time_ago' => $completedAt->diffForHumans(),
+            ];
+        });
+
+        $surveysWithSuggestions = $studentSuggestions
+            ->groupBy('survey_id')
+            ->map(function ($items) {
+                return [
+                    'id' => $items->first()['survey_id'],
+                    'title' => $items->first()['survey_title'],
+                    'count' => $items->count(),
+                ];
+            })
+            ->values();
+
+        $stats['total_suggestions'] = $studentSuggestions->count();
+
         return view('dashboard.index', compact(
             'stats',
             'minLikert',
@@ -235,7 +310,9 @@ class DashboardController extends Controller
             'satisfactionTrend',
             'trendPoints',
             'recentSurveys',
-            'insight'
+            'insight',
+            'studentSuggestions',
+            'surveysWithSuggestions'
         ));
     }
 
