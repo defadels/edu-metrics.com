@@ -244,6 +244,49 @@
     .table-modern thead th {
         @apply bg-gray-50 text-gray-600 font-bold border-b border-gray-200;
     }
+    /* Float Animation */
+    @keyframes float-slow {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    .animate-float-slow {
+        animation: float-slow 4s ease-in-out infinite;
+    }
+
+    /* Shimmer Animation */
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    .animate-shimmer {
+        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+        background-size: 200% 100%;
+        animation: shimmer 2.5s infinite;
+    }
+
+    /* Glow pulse */
+    @keyframes glow-pulse {
+        0%, 100% {
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+        }
+        50% {
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.45);
+        }
+    }
+
+    .animate-glow-pulse {
+        animation: glow-pulse 3s infinite ease-in-out;
+    }
 }
 
 @layer utilities {
@@ -255,3 +298,4 @@
         text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 }
+
