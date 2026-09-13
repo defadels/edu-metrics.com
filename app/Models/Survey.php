@@ -48,4 +48,16 @@ class Survey extends Model
     {
         return $this->hasMany(Response::class, 'survey_id');
     }
+
+    public function isOpen(): bool
+    {
+        return (bool) $this->is_active
+            && (! $this->start_date || $this->start_date <= now())
+            && (! $this->end_date || $this->end_date >= now());
+    }
+
+    public function isClosed(): bool
+    {
+        return ! $this->isOpen();
+    }
 }
