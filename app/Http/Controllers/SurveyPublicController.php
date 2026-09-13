@@ -15,10 +15,7 @@ class SurveyPublicController extends Controller
 {
     public function index(): View
     {
-        $surveys = Survey::where('is_active', true)
-            ->where('start_date', '<=', now())
-            ->where('end_date', '>=', now())
-            ->with(['category', 'questions'])
+        $surveys = Survey::with(['category', 'questions'])
             ->withCount('questions', 'responses')
             ->latest()
             ->paginate(12);
@@ -28,10 +25,6 @@ class SurveyPublicController extends Controller
 
     public function show(Survey $survey): View
     {
-        if (! $survey->is_active || $survey->start_date > now() || $survey->end_date < now()) {
-            abort(404, 'Survey tidak tersedia');
-        }
-
         $survey->load(['category', 'questions.likertScale', 'questions.options']);
 
         // Check if user already submitted
@@ -48,8 +41,9 @@ class SurveyPublicController extends Controller
 
     public function start(Survey $survey): RedirectResponse|View
     {
-        if (! $survey->is_active || $survey->start_date > now() || $survey->end_date < now()) {
-            abort(404, 'Survey tidak tersedia');
+        if ($survey->isClosed()) {
+            return redirect()->route('surveys.show', $survey)
+                ->with('error', 'Survey ini sudah ditutup.');
         }
 
         // Check if user already has an active response
@@ -78,8 +72,9 @@ class SurveyPublicController extends Controller
 
     public function submit(Request $request, Survey $survey): RedirectResponse
     {
-        if (! $survey->is_active || $survey->start_date > now() || $survey->end_date < now()) {
-            abort(404, 'Survey not available');
+        if ($survey->isClosed()) {
+            return redirect()->route('surveys.show', $survey)
+                ->with('error', 'Survey ini sudah ditutup.');
         }
 
         $request->validate([

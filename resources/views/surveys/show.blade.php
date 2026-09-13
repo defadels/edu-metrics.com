@@ -5,16 +5,27 @@
 @section('content')
     <div class="bg-theme-primary text-black py-12 mb-10 shadow-inner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
                 <a href="{{ route('surveys.index') }}" class="text-black/60 hover:text-black transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </a>
-                <span class="px-3 py-1 text-xs font-bold rounded-lg bg-white/10 text-black uppercase tracking-wider">
-                    {{ $survey->category->name }}
+                <span class="px-3 py-1 text-xs font-bold rounded-lg bg-white/20 text-black uppercase tracking-wider">
+                    {{ $survey->category?->name ?? 'Kategori' }}
                 </span>
+                @if ($survey->isOpen())
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-lg bg-emerald-100 text-emerald-800 uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                        Aktif
+                    </span>
+                @else
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-lg bg-red-100 text-red-800 uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                        Sudah Ditutup
+                    </span>
+                @endif
             </div>
             <h1 class="text-3xl font-bold mb-2">{{ $survey->title }}</h1>
             <p class="text-black/80">Informasi detail instrumen kuesioner</p>
@@ -22,9 +33,18 @@
     </div>
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        @if (session('error'))
+            <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-2xl flex items-center gap-3">
+                <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="font-medium text-sm">{{ session('error') }}</span>
+            </div>
+        @endif
+
         <div
             class="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-gray-100 flex flex-col items-center text-center">
-            <div class="w-20 h-20 bg-theme-primary/5 text-theme-active rounded-2xl flex items-center justify-center mb-8">
+            <div class="w-20 h-20 bg-theme-primary/10 text-theme-active rounded-2xl flex items-center justify-center mb-8">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -46,7 +66,7 @@
                 </div>
                 <div class="p-5 rounded-2xl bg-gray-50 border border-gray-100">
                     <div class="text-xs text-gray-400 font-bold uppercase mb-1">Batas Waktu Pengisian</div>
-                    <div class="text-lg font-bold text-gray-900">{{ $survey->end_date->format('d F Y') }}</div>
+                    <div class="text-lg font-bold text-gray-900">{{ $survey->end_date ? $survey->end_date->format('d F Y') : '-' }}</div>
                 </div>
             </div>
 
@@ -61,8 +81,21 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-amber-900 leading-tight">Anda Sudah Mengisi Instrumen Ini</h4>
-                        <p class="text-amber-700 text-sm">Jawaban Anda sudah kami terima. Terima kasih atas partisipasi
-                            Anda.</p>
+                        <p class="text-amber-700 text-sm">Jawaban Anda sudah kami terima. Terima kasih atas partisipasi Anda.</p>
+                    </div>
+                </div>
+            @elseif ($survey->isClosed())
+                <div
+                    class="w-full p-6 bg-red-50 rounded-2xl border border-red-100 mb-10 flex items-center gap-4 text-left">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-red-600 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-red-900 leading-tight">Survey Sudah Ditutup</h4>
+                        <p class="text-red-700 text-sm">Batas waktu pengisian kuesioner ini telah berakhir atau instrumen sedang dinonaktifkan.</p>
                     </div>
                 </div>
             @endif
@@ -72,11 +105,16 @@
                     class="flex-1 text-center py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold hover:bg-gray-200 transition-colors">
                     Kembali
                 </a>
-                @if (!$hasResponded)
+                @if (!$hasResponded && $survey->isOpen())
                     <a href="{{ route('surveys.start', $survey) }}"
                         class="flex-1 text-center py-4 bg-theme-active text-white rounded-2xl font-bold shadow-lg shadow-theme-active/20 hover:bg-theme-active/90 transform hover:-translate-y-0.5 transition-all">
                         Mulai Isi Kuesioner
                     </a>
+                @elseif (!$hasResponded && $survey->isClosed())
+                    <button type="button" disabled
+                        class="flex-1 text-center py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold cursor-not-allowed border border-gray-200">
+                        Survey Sudah Ditutup
+                    </button>
                 @endif
             </div>
         </div>
