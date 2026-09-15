@@ -47,6 +47,17 @@ Route::get('/seeder-students', function () {
     return redirect('/seeder/students');
 });
 
+Route::get('/seeder/surveys', function () {
+    Artisan::call('db:seed', [
+        '--class' => 'SurveySeeder',
+        '--force' => true,
+    ]);
+
+    $output = Artisan::output();
+
+    return nl2br($output ?: 'Survey and student responses seeded successfully!');
+});
+
 Route::get('/migrate', function () {
     Artisan::call('migrate');
     $output = Artisan::output();

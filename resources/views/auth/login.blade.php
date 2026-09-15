@@ -4,27 +4,27 @@
 
     <div class="mb-5">
         <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Login Account</h2>
-        <p class="text-sm text-gray-600">Enter your username and password</p>
+        <p class="text-sm text-gray-600">Enter your username, email, or NIM and password</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Username, Email, or NIM -->
         <div>
-            <x-input-label for="email" :value="__('Username')" />
+            <x-input-label for="login" :value="__('Username, Email, atau NIM')" />
             <x-text-input 
-                id="email" 
-                type="email" 
-                name="email" 
-                :value="old('email')" 
+                id="login" 
+                type="text" 
+                name="login" 
+                :value="old('login', old('email'))" 
                 required 
                 autofocus 
                 autocomplete="username"
-                placeholder="Enter your username"
+                placeholder="Masukkan username, email, atau NIM"
                 class="mt-1 block w-full py-2.5"
             />
-            <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
+            <x-input-error :messages="$errors->get('login') ?: $errors->get('email')" class="mt-1.5" />
         </div>
 
         <!-- Password -->
