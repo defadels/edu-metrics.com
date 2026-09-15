@@ -273,6 +273,10 @@
                 carouselInterval: null,
                 isPaused: false,
 
+                // Pagination state for Grid View
+                currentPage: 1,
+                perPage: 4,
+
                 items: {{ Js::from($studentSuggestions) }},
                 surveys: {{ Js::from($surveysWithSuggestions) }},
 
@@ -290,6 +294,51 @@
                                (item.survey_title && item.survey_title.toLowerCase().includes(query)) ||
                                (item.question_text && item.question_text.toLowerCase().includes(query));
                     });
+                },
+
+                get totalPages() {
+                    return Math.max(1, Math.ceil(this.filteredItems.length / this.perPage));
+                },
+
+                get paginatedItems() {
+                    const start = (this.currentPage - 1) * this.perPage;
+                    return this.filteredItems.slice(start, start + this.perPage);
+                },
+
+                get pageNumbers() {
+                    const total = this.totalPages;
+                    const current = this.currentPage;
+                    if (total <= 7) {
+                        return Array.from({ length: total }, (_, i) => i + 1);
+                    }
+                    const pages = [];
+                    if (current <= 4) {
+                        pages.push(1, 2, 3, 4, 5, '...', total);
+                    } else if (current >= total - 3) {
+                        pages.push(1, '...', total - 4, total - 3, total - 2, total - 1, total);
+                    } else {
+                        pages.push(1, '...', current - 1, current, current + 1, '...', total);
+                    }
+                    return pages;
+                },
+
+                goToPage(page) {
+                    if (page === '...' || typeof page !== 'number') return;
+                    if (page >= 1 && page <= this.totalPages) {
+                        this.currentPage = page;
+                    }
+                },
+
+                nextPage() {
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                    }
+                },
+
+                prevPage() {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                    }
                 },
 
                 copyText(text, id) {
@@ -338,8 +387,14 @@
 
                 init() {
                     this.startAutoPlay();
-                    this.$watch('selectedSurvey', () => { this.carouselIndex = 0; });
-                    this.$watch('searchQuery', () => { this.carouselIndex = 0; });
+                    this.$watch('selectedSurvey', () => { 
+                        this.carouselIndex = 0; 
+                        this.currentPage = 1; 
+                    });
+                    this.$watch('searchQuery', () => { 
+                        this.carouselIndex = 0; 
+                        this.currentPage = 1; 
+                    });
                     this.$watch('viewMode', (val) => {
                         if (val === 'carousel') this.startAutoPlay();
                         else this.stopAutoPlay();
@@ -467,126 +522,199 @@
             {{-- 1. GRID VIEW MODE --}}
             <div x-show="viewMode === 'grid'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
                 <template x-if="filteredItems.length > 0">
-                    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-                        <template x-for="(item, idx) in filteredItems" :key="item.id">
-                            <article
-                                class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-rose-400 hover:shadow-xl hover:shadow-rose-500/5 dark:border-gray-700/80 dark:bg-gray-900/50 dark:hover:border-rose-500 sm:p-6"
-                            >
-                                {{-- Background Quote Watermark --}}
-                                <svg class="pointer-events-none absolute right-3 top-3 h-20 w-20 text-gray-100 opacity-60 transition-all duration-300 group-hover:scale-110 group-hover:text-rose-100 dark:text-gray-800/40 dark:group-hover:text-rose-950/40" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                                </svg>
+                    <div class="space-y-6">
+                        {{-- Cards Grid (4 items per page) --}}
+                        <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+                            <template x-for="(item, idx) in paginatedItems" :key="item.id">
+                                <article
+                                    class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-rose-400 hover:shadow-xl hover:shadow-rose-500/5 dark:border-gray-700/80 dark:bg-gray-900/50 dark:hover:border-rose-500 sm:p-6"
+                                >
+                                    {{-- Background Quote Watermark --}}
+                                    <svg class="pointer-events-none absolute right-3 top-3 h-20 w-20 text-gray-100 opacity-60 transition-all duration-300 group-hover:scale-110 group-hover:text-rose-100 dark:text-gray-800/40 dark:group-hover:text-rose-950/40" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                                    </svg>
 
-                                <div class="relative z-10">
-                                    {{-- Respondent Header --}}
-                                    <div class="flex items-start gap-3.5">
-                                        <div
-                                            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr font-black text-white shadow-md text-sm"
-                                            :class="item.avatar_gradient"
-                                            x-text="item.avatar_initials"
-                                        ></div>
-                                        <div class="min-w-0 flex-1">
-                                            <div class="flex items-center gap-2">
-                                                <h4 class="truncate text-sm font-extrabold text-gray-900 dark:text-white" x-text="item.respondent_name"></h4>
-                                                <template x-if="!item.is_anonymous">
-                                                    <span class="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-950/40 dark:text-emerald-300">
-                                                        Student
-                                                    </span>
-                                                </template>
-                                                <template x-if="item.is_anonymous">
-                                                    <span class="inline-flex shrink-0 items-center rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-                                                        Anonymous
-                                                    </span>
-                                                </template>
+                                    <div class="relative z-10">
+                                        {{-- Respondent Header --}}
+                                        <div class="flex items-start gap-3.5">
+                                            <div
+                                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr font-black text-white shadow-md text-sm"
+                                                :class="item.avatar_gradient"
+                                                x-text="item.avatar_initials"
+                                            ></div>
+                                            <div class="min-w-0 flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <h4 class="truncate text-sm font-extrabold text-gray-900 dark:text-white" x-text="item.respondent_name"></h4>
+                                                    <template x-if="!item.is_anonymous">
+                                                        <span class="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-950/40 dark:text-emerald-300">
+                                                            Student
+                                                        </span>
+                                                    </template>
+                                                    <template x-if="item.is_anonymous">
+                                                        <span class="inline-flex shrink-0 items-center rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                                                            Anonymous
+                                                        </span>
+                                                    </template>
+                                                </div>
+                                                <div class="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+                                                    <template x-if="item.nim">
+                                                        <span class="font-semibold text-gray-700 dark:text-gray-300" x-text="'NIM: ' + item.nim"></span>
+                                                    </template>
+                                                    <template x-if="item.program_study">
+                                                        <span class="rounded bg-blue-50 px-1.5 py-0.5 text-[11px] font-medium text-blue-700 dark:bg-blue-950/50 dark:text-blue-300" x-text="item.program_study"></span>
+                                                    </template>
+                                                    <span class="text-[11px] text-gray-400" x-text="item.time_ago"></span>
+                                                </div>
                                             </div>
-                                            <div class="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
-                                                <template x-if="item.nim">
-                                                    <span class="font-semibold text-gray-700 dark:text-gray-300" x-text="'NIM: ' + item.nim"></span>
-                                                </template>
-                                                <template x-if="item.program_study">
-                                                    <span class="rounded bg-blue-50 px-1.5 py-0.5 text-[11px] font-medium text-blue-700 dark:bg-blue-950/50 dark:text-blue-300" x-text="item.program_study"></span>
-                                                </template>
-                                                <span class="text-[11px] text-gray-400" x-text="item.time_ago"></span>
-                                            </div>
+                                        </div>
+
+                                        {{-- Survey & Question Tags --}}
+                                        <div class="mt-4 flex flex-wrap items-center gap-1.5">
+                                            <span class="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-2.5 py-1 text-[11px] font-bold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                                <svg class="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                </svg>
+                                                <span class="truncate max-w-[200px]" x-text="item.survey_title"></span>
+                                            </span>
+                                            <span class="inline-flex items-center rounded-lg bg-rose-50 px-2.5 py-1 text-[11px] font-semibold text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">
+                                                <span class="truncate max-w-[220px]" x-text="'Q: ' + item.question_text"></span>
+                                            </span>
+                                        </div>
+
+                                        {{-- Feedback Message Content --}}
+                                        <div class="mt-3.5 rounded-xl border-l-4 border-rose-500 bg-rose-50/30 p-3.5 text-sm leading-relaxed text-gray-800 dark:border-rose-400 dark:bg-rose-950/20 dark:text-gray-200">
+                                            <p class="italic">
+                                                “<span x-text="(expandedId === item.id || item.text_value.length <= 150) ? item.text_value : (item.text_value.substring(0, 150) + '...')"></span>”
+                                            </p>
+                                            <template x-if="item.text_value.length > 150">
+                                                <button
+                                                    type="button"
+                                                    @click="expandedId = (expandedId === item.id ? null : item.id)"
+                                                    class="mt-2 inline-flex items-center text-xs font-bold text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300"
+                                                >
+                                                    <span x-text="expandedId === item.id ? 'Show Less' : 'Read More'"></span>
+                                                    <svg class="ml-1 h-3.5 w-3.5 transition-transform" :class="expandedId === item.id ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            </template>
                                         </div>
                                     </div>
 
-                                    {{-- Survey & Question Tags --}}
-                                    <div class="mt-4 flex flex-wrap items-center gap-1.5">
-                                        <span class="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-2.5 py-1 text-[11px] font-bold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                                            <svg class="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
-                                            <span class="truncate max-w-[200px]" x-text="item.survey_title"></span>
-                                        </span>
-                                        <span class="inline-flex items-center rounded-lg bg-rose-50 px-2.5 py-1 text-[11px] font-semibold text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">
-                                            <span class="truncate max-w-[220px]" x-text="'Q: ' + item.question_text"></span>
-                                        </span>
-                                    </div>
+                                    {{-- Card Footer --}}
+                                    <div class="relative z-10 mt-4 flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-800">
+                                        <span class="text-[11px] text-gray-400 font-medium" x-text="item.submitted_at"></span>
 
-                                    {{-- Feedback Message Content --}}
-                                    <div class="mt-3.5 rounded-xl border-l-4 border-rose-500 bg-rose-50/30 p-3.5 text-sm leading-relaxed text-gray-800 dark:border-rose-400 dark:bg-rose-950/20 dark:text-gray-200">
-                                        <p class="italic">
-                                            “<span x-text="(expandedId === item.id || item.text_value.length <= 150) ? item.text_value : (item.text_value.substring(0, 150) + '...')"></span>”
-                                        </p>
-                                        <template x-if="item.text_value.length > 150">
+                                        <div class="flex items-center gap-2">
                                             <button
                                                 type="button"
-                                                @click="expandedId = (expandedId === item.id ? null : item.id)"
-                                                class="mt-2 inline-flex items-center text-xs font-bold text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300"
+                                                @click="copyText(item.text_value, item.id)"
+                                                class="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-gray-500 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200 transition-colors"
+                                                title="Copy suggestion text"
                                             >
-                                                <span x-text="expandedId === item.id ? 'Show Less' : 'Read More'"></span>
-                                                <svg class="ml-1 h-3.5 w-3.5 transition-transform" :class="expandedId === item.id ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                                </svg>
+                                                <template x-if="copiedId === item.id">
+                                                    <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
+                                                        <svg class="h-3.5 w-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                        <span>Copied</span>
+                                                    </span>
+                                                </template>
+                                                <template x-if="copiedId !== item.id">
+                                                    <span class="inline-flex items-center gap-1">
+                                                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                        </svg>
+                                                        <span>Copy</span>
+                                                    </span>
+                                                </template>
                                             </button>
+
+                                            <a
+                                                :href="'{{ url('dashboard/surveys') }}/' + item.survey_id + '/responses/' + item.response_id"
+                                                class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/50 transition-colors"
+                                                title="View response details"
+                                            >
+                                                <span>Detail</span>
+                                                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </article>
+                            </template>
+                        </div>
+
+                        {{-- Pagination Controls for Grid View --}}
+                        <div
+                            x-show="totalPages > 1"
+                            class="flex flex-col items-center justify-between gap-4 border-t border-gray-100 pt-5 dark:border-gray-700/60 sm:flex-row"
+                        >
+                            {{-- Showing entries info --}}
+                            <div class="text-xs font-semibold text-gray-500 dark:text-gray-400">
+                                Showing
+                                <span class="font-bold text-gray-900 dark:text-white" x-text="((currentPage - 1) * perPage) + 1"></span>
+                                to
+                                <span class="font-bold text-gray-900 dark:text-white" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span>
+                                of
+                                <span class="font-bold text-gray-900 dark:text-white" x-text="filteredItems.length"></span>
+                                suggestions
+                            </div>
+
+                            {{-- Page Navigation Buttons --}}
+                            <nav class="inline-flex items-center gap-1 rounded-xl bg-white p-1 shadow-sm ring-1 ring-black/5 dark:bg-gray-850 dark:ring-white/10" aria-label="Suggestions Pagination">
+                                {{-- Previous Button --}}
+                                <button
+                                    type="button"
+                                    @click="prevPage()"
+                                    :disabled="currentPage === 1"
+                                    :class="currentPage === 1 ? 'opacity-40 cursor-not-allowed text-gray-400' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white'"
+                                    class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold transition-all"
+                                    title="Previous Page"
+                                >
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                    <span class="sr-only">Previous</span>
+                                </button>
+
+                                {{-- Page Numbers --}}
+                                <template x-for="(p, pIdx) in pageNumbers" :key="'page-' + pIdx">
+                                    <div>
+                                        <template x-if="p === '...'">
+                                            <span class="inline-flex h-8 w-7 items-center justify-center text-xs font-bold text-gray-400 select-none">...</span>
+                                        </template>
+                                        <template x-if="p !== '...'">
+                                            <button
+                                                type="button"
+                                                @click="goToPage(p)"
+                                                :class="currentPage === p 
+                                                    ? 'bg-rose-600 text-white font-black shadow-sm ring-1 ring-rose-600 dark:bg-rose-600' 
+                                                    : 'text-gray-700 hover:bg-gray-100 font-semibold dark:text-gray-300 dark:hover:bg-gray-800'"
+                                                class="inline-flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-xs transition-all"
+                                                x-text="p"
+                                            ></button>
                                         </template>
                                     </div>
-                                </div>
+                                </template>
 
-                                {{-- Card Footer --}}
-                                <div class="relative z-10 mt-4 flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-800">
-                                    <span class="text-[11px] text-gray-400 font-medium" x-text="item.submitted_at"></span>
-
-                                    <div class="flex items-center gap-2">
-                                        <button
-                                            type="button"
-                                            @click="copyText(item.text_value, item.id)"
-                                            class="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-gray-500 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200 transition-colors"
-                                            title="Copy suggestion text"
-                                        >
-                                            <template x-if="copiedId === item.id">
-                                                <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
-                                                    <svg class="h-3.5 w-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                    </svg>
-                                                    <span>Copied</span>
-                                                </span>
-                                            </template>
-                                            <template x-if="copiedId !== item.id">
-                                                <span class="inline-flex items-center gap-1">
-                                                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                                    </svg>
-                                                    <span>Copy</span>
-                                                </span>
-                                            </template>
-                                        </button>
-
-                                        <a
-                                            :href="'{{ url('dashboard/surveys') }}/' + item.survey_id + '/responses/' + item.response_id"
-                                            class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/50 transition-colors"
-                                            title="View response details"
-                                        >
-                                            <span>Detail</span>
-                                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-                        </template>
+                                {{-- Next Button --}}
+                                <button
+                                    type="button"
+                                    @click="nextPage()"
+                                    :disabled="currentPage === totalPages"
+                                    :class="currentPage === totalPages ? 'opacity-40 cursor-not-allowed text-gray-400' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white'"
+                                    class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold transition-all"
+                                    title="Next Page"
+                                >
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                    <span class="sr-only">Next</span>
+                                </button>
+                            </nav>
+                        </div>
                     </div>
                 </template>
             </div>
