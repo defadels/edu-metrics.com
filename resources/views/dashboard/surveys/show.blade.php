@@ -36,11 +36,11 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
-                <p class="text-gray-900">{{ $survey->start_date->format('d M Y H:i') }}</p>
+                <p class="text-gray-900">{{ $survey->start_date?->format('d M Y H:i') ?? '-' }}</p>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
-                <p class="text-gray-900">{{ $survey->end_date->format('d M Y H:i') }}</p>
+                <p class="text-gray-900">{{ $survey->end_date?->format('d M Y H:i') ?? '-' }}</p>
             </div>
         </div>
         

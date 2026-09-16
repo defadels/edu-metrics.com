@@ -48,14 +48,14 @@
             <div class="grid grid-cols-2 gap-6 mb-6">
                 <div>
                     <x-input-label for="start_date" :value="__('Start Date')" />
-                    <x-text-input id="start_date" type="datetime-local" name="start_date" :value="old('start_date', $survey->start_date->format('Y-m-d\TH:i'))" required />
+                    <x-text-input id="start_date" type="datetime-local" name="start_date" :value="old('start_date', $survey->start_date?->format('Y-m-d\TH:i'))" required />
                     @error('start_date')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
                     <x-input-label for="end_date" :value="__('End Date')" />
-                    <x-text-input id="end_date" type="datetime-local" name="end_date" :value="old('end_date', $survey->end_date->format('Y-m-d\TH:i'))" required />
+                    <x-text-input id="end_date" type="datetime-local" name="end_date" :value="old('end_date', $survey->end_date?->format('Y-m-d\TH:i'))" required />
                     @error('end_date')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
