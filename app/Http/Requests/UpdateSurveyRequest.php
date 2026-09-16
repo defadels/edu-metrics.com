@@ -11,6 +11,14 @@ class UpdateSurveyRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_active' => $this->boolean('is_active'),
+            'is_anonymous' => $this->boolean('is_anonymous'),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
